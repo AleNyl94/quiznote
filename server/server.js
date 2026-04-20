@@ -3,12 +3,19 @@ import ollama from 'ollama'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
 import app from './app.js'
-// import { Server } from 'socket.io'
-// import { setupSocket } from './socket.js'
+import { Server } from 'socket.io'
+import { setupSocket } from './socket.js'
+import http from 'http'
 
 // Initialize express, JSON
 app.use(express.json())
 const port = process.env.PORT || 3000
+const server = http.createServer(app)
+const io = new Server(server, {
+  cors: { origin: "*" }
+})
+
+setupSocket(io)
 
 try {
 // TODO implement the database logic here 
