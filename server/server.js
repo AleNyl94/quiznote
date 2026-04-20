@@ -17,6 +17,13 @@ const io = new Server(server, {
 
 setupSocket(io)
 
+// Implement database locally
+const mongoURI = process.env.MONGO_URI || 'mongodb://db:27017/quiznote'
+mongoose.connect(mongoURI)
+  .then(() => console.log('Connected to database'))
+  .catch(err => console.error('Error with database', err)
+
+)
 try {
 // TODO implement the database logic here 
 
