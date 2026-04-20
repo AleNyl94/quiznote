@@ -1,31 +1,32 @@
 import express from 'express'
 import ollama from 'ollama'
-import websockets from 'websockets'
-import { setupSocket } from './socket.js'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+import app from './app.js'
+// import { Server } from 'socket.io'
+// import { setupSocket } from './socket.js'
 
 // Initialize express, JSON
+app.use(express.json())
+const port = process.env.PORT || 3000
+
 try {
-const app = express()
-app.use(express.json)
-
-
 // TODO implement the database logic here 
 
 // The modules directory name
 const directoryFullName = (fileURLToPath(import.meta.url))
 
 // Setting up the router
-app.use('/', router)
+// app.use('/', router)
 } catch (err) {
+  console.error("Could not initiate routes", err)
+  }
   // Error handler
-  app.use((err, req, res, next) => {
+app.use((err, req, res, next) => {
     console.error(err)
+    res.status(500).send('Something went wrong in the server')
+})
 
-    if(err.status === 404) {
-      res
-        .status(404)
-        .sendFile(join(directoryFullName, 'views', 'errors'))
-      return
-    }
-  })
-}
+app.listen(port, '0.0.0.0', () => {
+  console.log(`App listening at http://localhost:${port}`);
+})
