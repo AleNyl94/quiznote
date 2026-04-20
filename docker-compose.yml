@@ -17,8 +17,8 @@ services:
     image: mongo:latest
     ports:
       - "27017:27017"
-    volumes:
-      - quiznote-data:/data/db
+    volumes: #
+      - quiznote-data:/data/db #
 
 volumes:
-  quiznote-data
+  quiznote-data: #
