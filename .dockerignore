@@ -5,5 +5,6 @@
 !public
 !src
 !server
+!client
 !package-lock.json
 !package.json

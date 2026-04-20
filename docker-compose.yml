@@ -1,43 +1,24 @@
-# -----------------------------------------------------------------------------
+version: '3.8'
 
-# Base stage
+services:
+  app:
+    build: ./server 
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - MONGO_URI=mongodb://db:27017/quiznote
+    depends_on:
+      - db
 
-# -----------------------------------------------------------------------------
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - quiznote-data:/data/db
 
-FROM node:lts-bookworm-slim AS base
-
-
-
-WORKDIR /usr/src/app
-
-COPY . .
-
-RUN npm install --ignore-scripts
-
-
-
-# -----------------------------------------------------------------------------
-
-# Final stage
-
-# -----------------------------------------------------------------------------
-
-FROM node:lts-bookworm-slim
-
-
-
-WORKDIR /usr/src/app
-
-COPY --from=base --chown=node:node /usr/src/app/ /usr/src/app/
-
-USER node
-
-
-
-ARG EXPRESS_APP_PORT=3000
-
-EXPOSE ${EXPRESS_APP_PORT}
-
-ENV PORT=$EXPRESS_APP_PORT
-
-CMD ["npm", "start"]
+volumes:
+  quiznote-data
