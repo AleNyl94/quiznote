@@ -1,11 +1,10 @@
-import express from 'express'
-import ollama from 'ollama'
-import { fileURLToPath } from 'url'
-import { dirname, join } from 'path'
 import app from './app.js'
+import express from 'express'
 import { Server } from 'socket.io'
 import { setupSocket } from './socket.js'
 import http from 'http'
+import mongoose from 'mongoose'
+import { fileURLToPath } from 'url'
 
 // Initialize express, JSON
 app.use(express.json())
