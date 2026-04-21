@@ -11,9 +11,7 @@ export const noteController = {
    */
   create: async (err, req, res, next) => {
     try {
-      const { title, body, owner } = req.body
-      const newNote = new Note({ title, body, owner})
-      const savedNote = await newNote.save()
+      const savedNote = await new Note(req.body).save()
       res.status(201).json(savedNote)
     } catch (err) {
       res.status(400).json({ error: err.message })
@@ -30,7 +28,7 @@ export const noteController = {
    */
   get: async (err, req, res, next) => {
     try {
-      const notes = await Note.find().populate('owner', 'user.email')
+      const notes = await Note.find().populate('owner', 'email')
       res.json(notes)
     } catch (err) {
       res.status(500).json({ error: err.message })
@@ -47,14 +45,11 @@ export const noteController = {
    */
   edit: async (err, req, res, next) => {
     try {
-      const note = res.locals.note
-      const { title, body } = req.body
-
-      note.title = title
-      note.body = body
+      const { note } = res.locals
+      Object.assign(note, req.body)
 
       await note.save()
-      res.status(204).json(`Note ${title} is updated successfully`)
+      res.status(204).json(`Note ${note.title} is updated successfully`)
     } catch (err) {
       res.status(400).json({ error: err.message })
     }
@@ -71,13 +66,10 @@ export const noteController = {
    */
   delete: async (err, req, res, next) => {
     try {
-      const note = await Note.findByIdAndDelete(req.params.id)
-      if (!note) {
-        return res.status(404).json({ error: "Note not found" });
-        }
+      await res.locals.note.deleteOne()
+      res.status(204).end()
     } catch (err) {
       res.status(500).json({ error: err.message })
     }
   }
-
 }
