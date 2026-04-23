@@ -1,12 +1,11 @@
-import { Note } from '../models/noteModel.js'
 import { noteController } from '../controllers/noteController.js'
 import express from 'express'
 
-const router = express.Router()
+const noteRouter = express.Router()
 
-router.post('/', noteController.create)
-router.put('/:id', noteController.edit)
-router.get('/', noteController.get)
-router.delete('/:id', noteController.delete)
+noteRouter.post('/', noteController.create)
+noteRouter.put('/:id', noteController.edit)
+noteRouter.get('/list', noteController.get)
+noteRouter.delete('/:id', noteController.delete)
 
-export const noteRouter
+export default noteRouter

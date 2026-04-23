@@ -1,10 +1,10 @@
 import { userController } from '../controllers/userController.js'
 import express from 'express'
 
-const router = express.Router()
+const userRouter = express.Router()
+console.log("Är userController laddad?", userController)
+userRouter.post('/signup', userController.signup)
+userRouter.post('/login', userController.login)
+userRouter.get('/logout', userController.logout)
 
-router.post('/signup', userController.signup)
-router.post('/login', userController.login)
-router.get('/logout', userController.logout)
-
-export const userRouter
+export default userRouter

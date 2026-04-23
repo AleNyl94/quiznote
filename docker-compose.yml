@@ -9,10 +9,7 @@ services:
       - ./server:/usr/src/app
       - /usr/src/app/node_modules
     environment:
-      - MONGO_URI=mongodb://db:27017/quiznote
-    depends_on:
-      - db
-
+      - MONGO_URI=mongodb+srv://an225ee_db_user:3wI6DijWwn5JywvX@cluster1.o1dz1am.mongodb.net/?appName=Cluster1
   db:
     image: mongo:latest
     ports:
