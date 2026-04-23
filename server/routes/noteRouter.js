@@ -9,3 +9,4 @@ router.put('/:id', noteController.edit)
 router.get('/', noteController.get)
 router.delete('/:id', noteController.delete)
 
+export const noteRouter

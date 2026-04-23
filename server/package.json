@@ -5,7 +5,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "test": "npm run eslint && echo 'Allt ser grönt ut!'",
     "start": "node server.js"
   },
   "keywords": [],
