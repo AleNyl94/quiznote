@@ -4,8 +4,6 @@ export const userController = {
 
   signup: async (req, res) => {
     try {
-      console.log("1. Signup startad...");
-      console.log("2. Body innehåll:", req.body)
       await User.create(req.body)
       res.status(200).json('A new User is created!')
     } catch (err) {
