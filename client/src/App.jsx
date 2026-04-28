@@ -1,17 +1,32 @@
 import { useState } from 'react'
-import loginView from './components/loginView.jsx'
-import notesView from './components/notesView.jsx'
+import LoginView from './components/LoginView'
+import SignUpView from './components/SignUpView'
 
-const App() => {
-  const [isLoggedIn, setLoggedIn] = useState(false)
+function App() {
+
+const [currentView, setCurrentView] = useState('login')
+const toggleView = () => {
+  if (currentView === LoginView) {
+  setCurrentView('signup')
+  } else {
+    setCurrentView('login')
+  }
+}
+
 
   return (
-    <div class="app-container">
-    {isLoggedIn ? (
-      <dashboard onLogOut={() => setLoggedIn(false)} />
-    ) : (
-      <LogInView onLoggedIn={() => setLoggedIn(true)}/>
-    )}
+    <div className="App">
+      {currentView === 'login' ? (
+        <LoginView
+          onLoginSuccess={() => console.log('Logged in!')}
+          toggleView={toggleView}
+          />
+      ) : (
+        <SignUpView
+        onSignUpSuccess={() => setCurrentView('login')}
+        toggleView={toggleView}
+        />
+      )}
     </div>
   )
 }

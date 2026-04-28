@@ -1,5 +1,4 @@
 import express from 'express'
-import ollama from 'ollama'
 import { dirname, join } from 'path'
 
 const app = express()
