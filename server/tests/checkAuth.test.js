@@ -1,9 +1,10 @@
 import request from 'supertest'
+import mongoose from 'mongoose'
 import express from 'express'
 import { checkAuth } from '../middleware/authenticate.js'
 
 const app = express()
-app.use(express.json)
+app.use(express.json())
 
 app.get('/test-auth', checkAuth, (req, res) => res.status(200).json({ success: true }))
 
@@ -27,5 +28,8 @@ describe('Middleware: checkAuth', () => {
 
     expect(res.statusCode).toBe(200)
     expect(res.body.success).toBe(true)
+  })
+  afterAll(async () => {
+    await mongoose.disconnect()
   })
 })
