@@ -6,6 +6,17 @@ export const userController = {
     try {
       await User.create(req.body)
       res.status(200).json('A new User is created!')
+
+      // Checks if user already exists
+      const existingUser = await User.findOne({ 
+        $or: [ 
+          { username: req.body.username },
+          { email: req.body.email }
+        ]
+      })
+      if (existingUser) {
+        return res.status(409).json({ message: 'User already exists' });
+      }
     } catch (err) {
       console.log('Error:', err.message)
       res.status(400).json({ error: err.message })
