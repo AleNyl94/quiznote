@@ -13,7 +13,7 @@ const app = express()
 app.use(express.json())
 app.use(session({
     name: 'sessionID',
-    secret: process.env.SECRET_ENV,
+    secret: process.env.SECRET_ENV || 'test-secret-fallback',
     resave: false,
     saveUninitialized: false,
     cookie:{
