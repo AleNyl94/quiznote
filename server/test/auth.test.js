@@ -1,8 +1,13 @@
 import { jest, describe, test, expect } from '@jest/globals'
+import mongoose from 'mongoose'
 import request from 'supertest'
 import app from '../app.js'
 
 describe('Test1.1: Authentication', () => {
+  afterAll(async () => {
+    await mongoose.disconnect()
+  })
+
   const newUser = {
     username: 'usertest',
     password: 'secretpassword',
