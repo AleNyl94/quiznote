@@ -1,5 +1,5 @@
 import { noteController } from '../controllers/noteController.js'
-import { checkAuth } from '../middleware/checkAuth.js'
+import { checkAuth } from '../middleware/authenticate.js'
 import express from 'express'
 
 const noteRouter = express.Router()
