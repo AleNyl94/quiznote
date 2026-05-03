@@ -13,13 +13,13 @@ const app = express()
 app.use(express.json())
 app.use(session({
     name: 'sessionID',
-    // todo lägg till denna!! secret: process.env.SECRET_ENV,
+    secret: process.env.SECRET_ENV,
     resave: false,
     saveUninitialized: false,
     cookie:{
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24,
-        sameSite: 'lax'
+        sameSite: 'strict'
     }
 }))
 app.use('/', mainRouter)
