@@ -28,7 +28,7 @@ export const noteController = {
    */
   get: async (req, res, next) => {
     try {
-      const notes = await Note.find({ owner: req.user._id }).populate('owner', 'email')
+      const notes = await Note.find({ owner: res.locals.user._id }).populate('owner', 'email')
       res.json(notes)
     } catch (err) {
       res.status(500).json({ error: err.message })
