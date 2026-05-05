@@ -1,4 +1,5 @@
 import { Note } from '../models/noteModel.js'
+import { User } from '../models/userModel.js'
 
 export const noteController = {
 

@@ -59,6 +59,7 @@ describe('Note isolated CRUD Test', () => {
       locals: {
         user: { _id: mockUserID }
       },
+      status: jest.fn().mockReturnThis(),
       json: jest.fn()
     }
     await noteController.get(req, res)
