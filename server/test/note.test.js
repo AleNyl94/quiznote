@@ -5,38 +5,23 @@
  */
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import mongoose from 'mongoose'
-import app from '../app.js'
-import request from 'supertest'
+import { it, jest } from '@jest/globals'
+import { noteController } from '../controllers/noteController.js'
+import { Note } from '../models/noteModel.js'
 
 /**
  * The dummy database for the tests.
  */
 
 let mongoServer
+const mockUserID = new mongoose.Types.ObjectId()
+let savedNoteId
 
-/**
- * Simulating login so that the checkAuth-middleware is letting
- * the tests through.
- */
-jest.mock('../middleware/authenticate.js', () => ({
-  checkAuth: (req, res, next) => {
-    res.locals.user = { 
-      _id: '66361a94e68e0f98e6b26c6d',
-      email: 'test@test.com' 
-    }
-    next()
-  }
-}))
-
-/**
- * The integration test.
- */
-describe('Test2.1: Note CRUD Integration Test', () => {
+describe('Note isolated CRUD Test', () => {
   // Setting up the dummy database
   beforeAll(async () => {
     mongoServer = await MongoMemoryServer.create()
-    const uri = mongoServer.getUri()
-    await mongoose.connect(uri)
+    await mongoose.connect(mongoServer.getUri())
     })
   
   afterAll(async () => {
@@ -44,33 +29,75 @@ describe('Test2.1: Note CRUD Integration Test', () => {
     await mongoServer.stop()
   })
 
-  // creates a mock user to own the test-note.
-  const mockUser = { _id: new mongoose.Types.ObjectId().toString(), email: 'test@test.com' }
-  let noteId
-
-  it('Tests the full CRUD-cycle', async () => {
+  it('Tests the CREATE-function', async () => {
     // Create
-    const newNote = { title: 'Test Note', body: 'Content Ipsum Dolor', owner: mockUser._id }
-    const createRes = await request(app)
-    .post('/note')
-    .send(newNote)
+    const req = { 
+      body: {
+        title: 'Test Note', 
+        body: 'Content Ipsum Dolor', 
+        owner: mockUserID 
+      }
+    }
 
-    expect(createRes.status).toBe(201)
-    noteId = createRes.body._id
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn((data) => { savedNoteId = data._id })
+    }
 
-    // Get
-    const getRes = await request(app).get('/note/list')
-    expect(getRes.status).toBe(200)
-    expect(getRes.body.some(n => n._id === noteId)).toBe(true)
+    await noteController.create(req, res)
+    if (res.status.mock.calls[0][0] === 400) {
+    console.log("Mongoose Error:", res.json.mock.calls[0][0])
+    }
+    expect(res.status).toHaveBeenCalledWith(201)
+  })
 
-    // Edit
-    const updateRes = await request(app)
-      .put(`/note/${noteId}`)
-      .send({ title: 'Updated new Title' })
-    expect(updateRes.status).toBe(200)
+  it('Getting the users notes', async () => {
+    const req = {
+      user: { _id: mockUserID }
+    }
+    const res = {
+      locals: {
+        user: { _id: mockUserID }
+      },
+      json: jest.fn()
+    }
+    await noteController.get(req, res)
 
-    // Delete
-    const deleteRes = await request(app).delete(`/note/${noteId}`)
-    expect(deleteRes.status).toBe(204)
+    expect(res.json).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining({ title: 'Test Note' })
+      ])
+    )
+  })
+
+  it('Should update the note', async () => {
+    const noteFound = await Note.findById(savedNoteId)
+
+    const req = { body: { title: 'Updated Title' } }
+    const res = {
+      locals: { note: noteFound },
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn()
+    }
+    await noteController.edit(req, res)
+
+    expect(res.status).toHaveBeenCalledWith(200)
+  })
+
+  it('Should delete a note', async () => {
+    const noteToDelete = await Note.findById(savedNoteId)
+
+    const req = {}
+    const res = {
+      locals: { note: noteToDelete },
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+      end: jest.fn()
+    }
+    await noteController.delete(req, res)
+
+    expect(res.status).toHaveBeenCalledWith(204)
+    const check = await Note.findById(savedNoteId)
+    expect(check).toBeNull()
   })
 })
