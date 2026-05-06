@@ -34,7 +34,7 @@ describe('Test1.1: Authentication', () => {
     .post('/signup')
     .send(newUser)
     
-    expect(response.statusCode).toBe(200)
+    expect(response.statusCode).toBe(201)
   })
 
   test('Gives a error message if the user is already registered', async () => {
@@ -42,6 +42,6 @@ describe('Test1.1: Authentication', () => {
       .post('/signup')
       .send(newUser)
 
-    expect(response.statusCode).toBe(400)
+    expect(response.statusCode).toBe(409)
   })
 })
