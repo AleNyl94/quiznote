@@ -15,7 +15,7 @@ import 'dotenv/config'
 const port = process.env.PORT || 3000
 
 // Implement database locally
-const mongoURI = process.env.MONGO_URI || 'mongodb://db:27017/quiznote'
+const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/quiznote'
 mongoose.connect(mongoURI)
   .then(() => console.log('Connected to database'))
   .catch(err => console.error('Error with database', err))
