@@ -20,17 +20,15 @@ export const aiService = {
         "messages": [{
       // First adress the models system and instruct it
         "role": "system",
-        "content": "Du är en quiz-generator som svarar med JSON. Returnera en array av objekt med question, falseAnswer, trueAnswer. Håll språket formellt och pedagogiskt"
+        "content": "Du är en quiz-generator som svarar med JSON. Returnera en array av objekt som heter 'tasks'. Varje objekt i arrayen ska ha question, falseAnswer, trueAnswer. Håll språket formellt och pedagogiskt"
         },
       // Then adress as a user that gives the text from users notes, which is the base of the quiz 
       {
         "role": "user",
         "content": `"Skapa frågor baserat på denna text:", ${noteBody}`
         }],
-      "response-format": {
-        "type": "json_object"
-      },
-      "temperature": 0.5
+      "response-format": { "type": "json_object" },
+      "temperature": 0.5 
     })
   })
 
@@ -40,18 +38,19 @@ export const aiService = {
   const quizData = JSON.parse(content)
 
   // Gets the question, true and false answer from each object.
-  const tasks = quizData.task.map(item => {
+  const formattedQuiz = quizData.tasks.map(item => {
     return {
       question: item.question,
       true: item.trueAnswer,
       false: item.falseAnswer
     }
-  return tasks
   })
-    console.log('Sending prompt to AI-model')
-    } catch (error) {
-      console.error("Error in contacting the ai-service", error)
-      throw error
-    }
+
+  console.log('Sending prompt to AI-model')
+  return formattedQuiz
+  } catch (error) {
+    console.error("Error in contacting the ai-service", error)
+    throw error
+  }
   }
 }
