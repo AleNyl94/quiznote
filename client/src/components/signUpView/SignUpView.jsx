@@ -2,6 +2,7 @@
  * Render the sign up form, retrieving the credentials and sends them to the backend.
  */ 
 import { useState } from 'react'
+import './signUpView.css'
 
 export default function SignUpView({ onSignUpSuccess, toggleView }) {
   const [username, setUsername] = useState('')
@@ -34,13 +35,14 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
   // The form for signing up an account
   return (
   <div className="signupForm">
-    <h3>Sign up your account</h3>
     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     <form onSubmit={handleSignup}>
+      <h2>Sign up your account</h2>
       <input type="text" placeholder="Your username" value={username} onChange={(e) => setUsername(e.target.value)}/>
       <input type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-      <button type="submit">Register account </button>
+      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <button class="submitBtn" type="submit">Register account </button>
+      <span onClick={toggleView}>Back to logging in</span>
     </form>
   </div>
   )

@@ -1,17 +1,17 @@
 import { useState } from 'react'
-import LoginView from './components/LoginView'
-import SignUpView from './components/SignUpView'
+import LoginView from './components/loginView/loginView.jsx'
+import SignUpView from './components/signUpView/signUpView.jsx'
 
 function App() {
 
 const [currentView, setCurrentView] = useState('login')
 const toggleView = () => {
-  if (currentView === LoginView) {
+  if (currentView === 'login') {
   setCurrentView('signup')
   } else {
     setCurrentView('login')
+    }
   }
-}
 
 
   return (
