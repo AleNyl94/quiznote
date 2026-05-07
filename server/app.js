@@ -16,11 +16,7 @@ app.use(session({
     secret: process.env.SECRET_ENV || 'test-secret-fallback',
     resave: false,
     saveUninitialized: false,
-    cookie:{
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24,
-        sameSite: 'strict'
-    }
+    cookie:{ secure: false }
 }))
 app.use('/', mainRouter)
 

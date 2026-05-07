@@ -3,14 +3,13 @@
  * @version 1.0.0
  * 
  */
-
+import 'dotenv/config'
 import app from './app.js'
 import { Server } from 'socket.io'
 import { setupSocket } from './socket.js'
 import http from 'http'
 import mongoose from 'mongoose'
 // import { fileURLToPath } from 'url'
-import 'dotenv/config'
 
 const port = process.env.PORT || 3000
 
@@ -28,7 +27,8 @@ const io = new Server(server, {
 
 setupSocket(io)
 
-app.get('api/me', (req, res) => {
+app.get('/api/me', (req, res) => {
+  console.log("Session check for user:", req.session?.user)
   if (req.session && req.session.user) {
     res.statusCode(200).json(req.session.user)
   } else {
