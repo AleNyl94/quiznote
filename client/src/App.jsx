@@ -5,21 +5,22 @@ import NoteView from './components/noteView/noteView.jsx'
 
 function App() {
 
+const [currentView, setCurrentView] = useState('login')
+const toggleView = () => {
+  setCurrentView(prev => prev === 'login' ? 'signup' : 'login')
+}
+
+const handleLoginSuccess = () => {
+  setCurrentView('notes')
+}
+
 useEffect(() => {
-  fetch('/me', { credentials: 'include'})
+  fetch('api/me', { credentials: 'include'})
     .then(res => {
       if(res.ok) setCurrentView('notes')
     })
   }, [])
 
-const [currentView, setCurrentView] = useState('login')
-const toggleView = () => {
-  setCurrentView(prev => prev === 'login' ? 'signup' : 'login')
-  }
-
-const handleLoginSuccess = () => {
-  setCurrentView('notes')
-}
 
 return (
   <div className="App">
