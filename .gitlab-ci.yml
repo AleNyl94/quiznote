@@ -1,15 +1,14 @@
 image: node:20
 
-
 stages:
-  - validate
+  - test
 
-test_and_scan:
-  stage: validate
+test_job:
+  stage: test
   script:
     - cd server
     - npm ci
-    - npm run lint || echo "Ingen linter konfigurerad"
+    - npm run eslint || echo "Linter hittade problem, men vi fortsätter"
     - npm test
     - npm audit --audit-level=high
   rules:
