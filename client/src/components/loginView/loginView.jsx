@@ -21,7 +21,8 @@ export default function LoginView({ toggleView, onLoginSuccess }) {
     const response = await fetch('/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
+      credentials: 'include'
     })
 
     const data = await response.json()

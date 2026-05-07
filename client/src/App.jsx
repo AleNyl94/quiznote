@@ -1,33 +1,39 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import LoginView from './components/loginView/loginView.jsx'
 import SignUpView from './components/signUpView/signUpView.jsx'
 
 function App() {
 
+useEffect(() => {
+fetch('/me', { credentials: 'include'})
+  .then(res => {
+    if(res.ok) setCurrentView('notes')
+  })
+}, [])
+
 const [currentView, setCurrentView] = useState('login')
 const toggleView = () => {
-  if (currentView === 'login') {
-  setCurrentView('signup')
-  } else {
-    setCurrentView('login')
-    }
+  setCurrentView(prev => prev === 'login' ? 'signup' : 'login')
   }
 
+const handleLoginSuccess = () => {
+  setCurrentView('notes')
+}
 
-  return (
-    <div className="App">
-      {currentView === 'login' ? (
-        <LoginView
-          onLoginSuccess={() => console.log('Logged in!')}
-          toggleView={toggleView}
-          />
-      ) : (
-        <SignUpView
-        onSignUpSuccess={() => setCurrentView('login')}
-        toggleView={toggleView}
-        />
-      )}
-    </div>
+return (
+  <div className="App">
+    {currentView === 'login' && (
+      <LoginView onLoginSuccess={handleLoginSuccess} toggleView={toggleView}/>
+    )}
+
+    {currentView === 'signup' && (
+      <SignUpView onSignUpSuccess={() => setCurrentView('login')} toggleView={toggleView}/>
+    )}
+
+    {currentView === 'notes' && (
+      <NoteView onLogOut={() => setCurrentView('login')} toggleView={toggleView}/>
+    )}
+  </div>
   )
 }
 
