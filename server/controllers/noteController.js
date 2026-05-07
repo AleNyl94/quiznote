@@ -1,5 +1,7 @@
 import { Note } from '../models/noteModel.js'
+import { User } from '../models/userModel.js'
 import { aiService } from '../utils/aiService.js'
+
 
 export const noteController = {
 
@@ -10,7 +12,7 @@ export const noteController = {
    * @param {*} res The response object.
    * @param {*} next The next path.
    */
-  create: async (req, res, next) => {
+  create: async (req, res) => {
     try {
       const savedNote = await new Note(req.body).save()
       res.status(201).json(savedNote)
