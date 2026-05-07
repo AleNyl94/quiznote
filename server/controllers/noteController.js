@@ -1,4 +1,5 @@
 import { Note } from '../models/noteModel.js'
+import { User } from '../models/userModel.js'
 
 export const noteController = {
 
@@ -28,7 +29,7 @@ export const noteController = {
    */
   get: async (req, res, next) => {
     try {
-      const notes = await Note.find().populate('owner', 'email')
+      const notes = await Note.find({ owner: res.locals.user._id }).populate('owner', 'email')
       res.json(notes)
     } catch (err) {
       res.status(500).json({ error: err.message })
