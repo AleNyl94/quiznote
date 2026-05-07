@@ -10,7 +10,7 @@ export const setupSocket = (io) => {
   io.on('connection', (socket) => {
     console.log('User Connected', socket.id)
     // TODO add connections for when websocket usage is needed, quiz or notes etc.
-    socket-on('disconnect', () => {
+    socket.on('disconnect', () => {
       console.log('User Disconnected')
     })
   })

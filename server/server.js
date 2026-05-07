@@ -28,6 +28,13 @@ const io = new Server(server, {
 
 setupSocket(io)
 
+app.get('/me', (res, req) => {
+  if (req.session && req.session.user) {
+    res.statusCode(200).json(req.session.user)
+  } else {
+    res.status(401).json({ message: 'Not authenticated' })
+  }
+})
 app.listen(port, '0.0.0.0', () => {
   console.log(`Server listening at http://localhost:${port}`);
 })
