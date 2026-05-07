@@ -3,14 +3,14 @@
  * @version 1.0.0
  * 
  */
-
+import 'dotenv/config'
 import app from './app.js'
 import { Server } from 'socket.io'
 import { setupSocket } from './socket.js'
 import http from 'http'
 import mongoose from 'mongoose'
 // import { fileURLToPath } from 'url'
-import 'dotenv/config'
+
 
 const port = process.env.PORT || 3000
 
