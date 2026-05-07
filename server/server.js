@@ -28,7 +28,7 @@ const io = new Server(server, {
 
 setupSocket(io)
 
-app.get('/me', (res, req) => {
+app.get('/me', (req, res) => {
   if (req.session && req.session.user) {
     res.statusCode(200).json(req.session.user)
   } else {
