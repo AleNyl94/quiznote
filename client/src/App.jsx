@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import LoginView from './components/loginView/loginView.jsx'
 import SignUpView from './components/signUpView/signUpView.jsx'
+import NoteView from './components/noteView/noteView.jsx'
 
 function App() {
 
 useEffect(() => {
-fetch('/me', { credentials: 'include'})
-  .then(res => {
-    if(res.ok) setCurrentView('notes')
-  })
-}, [])
+  fetch('/me', { credentials: 'include'})
+    .then(res => {
+      if(res.ok) setCurrentView('notes')
+    })
+  }, [])
 
 const [currentView, setCurrentView] = useState('login')
 const toggleView = () => {
@@ -31,7 +32,7 @@ return (
     )}
 
     {currentView === 'notes' && (
-      <NoteView onLogOut={() => setCurrentView('login')} toggleView={toggleView}/>
+      <NoteView onLogOut={() => setCurrentView('login')}/>
     )}
   </div>
   )
