@@ -2,7 +2,7 @@ import { useState } from 'react'
 import loginView from './components/loginView.jsx'
 import notesView from './components/notesView.jsx'
 
-const App() => {
+function App() {
   const [isLoggedIn, setLoggedIn] = useState(false)
 
   return (
