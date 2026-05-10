@@ -1,6 +1,6 @@
 /* --- GLOBAL SETTINGS & VARIABLES --- */
 :root {
-  --primary-color: #DDDDDD;
+  --primary-color: #f8f8f8;
   --secondary-color: #B8BAD2;
   --accent-color: #E9FF6D;
   --text-color: #000000;
@@ -73,8 +73,8 @@ h1, h2 {
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
+  font-size: 62px;
+  letter-spacing: -2px;
   margin: 32px 0;
   @media (max-width: 1024px) {
     font-size: 36px;

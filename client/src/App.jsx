@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import LoginView from './components/loginView/loginView.jsx'
-import SignUpView from './components/signUpView/signUpView.jsx'
+import SignUpView from './components/signUpView/SignUpView.jsx'
 import NoteView from './components/noteView/noteView.jsx'
 
 function App() {

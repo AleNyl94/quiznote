@@ -6,9 +6,13 @@ body {
   padding-top: 14vh;
 }
 
+h1 {
+  font-size: 112px;
+  font-weight: 500;
+  margin-bottom: 18%;
+}
+
 form {
-  background-color: #FFFFFF;
-  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,7 +20,6 @@ form {
   padding-bottom: 3%;
   max-width: 500px;
   width: 100%;
-  box-shadow: var(--shadow);
 }
 
 .signUpBtn {
@@ -56,26 +59,21 @@ input {
   display: flex;
   flex-direction: column;
   margin: 8px 0;
-  transition: border-color 0.2s ease;
-  border: 1px solid transparent;;
-  border-radius: 6px;
+  border: transparent;
+  border-radius: 3px;
   height: 5dvb;
-  background-color: #ececec;
+  background-color: transparent;
   padding-left: 1dvb;
   color: var(--text-color);
+
 }
 
 input:focus {
-  outline: none;
-  background-color: var(--accent-color);
+  background-color: #dfdfdf;
 }
 
 p {
   margin-top: 4%;
   margin-bottom: 1%;
-  font-size: 80%;
-}
-
-h3 {
-  margin-bottom: 0;
+  font-size: 68%;
 }

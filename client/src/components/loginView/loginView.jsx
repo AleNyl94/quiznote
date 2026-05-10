@@ -41,8 +41,7 @@ export default function LoginView({ toggleView, onLoginSuccess }) {
   <div class="loginForm">
     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     <form onSubmit={handleLogin}>
-      <h1>QuizNote</h1>
-      <h3>Log in:</h3>
+      <h1>QUIZNOTE</h1>
       <input type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
       <button class="loginBtn" onClick={handleLogin}>Log in</button>
