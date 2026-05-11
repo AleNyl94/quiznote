@@ -14,7 +14,7 @@ import mongoose from 'mongoose'
 const port = process.env.PORT || 3000
 
 // Implement database locally
-const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/quiznote'
+const mongoURI = process.env.MONGO_URI || 'mongodb+srv://an225ee_db_user:XK8acYHYW5ifblMV@cluster1.o1dz1am.mongodb.net/'
 mongoose.connect(mongoURI)
   .then(() => console.log('Connected to database'))
   .catch(err => console.error('Error with database', err))
