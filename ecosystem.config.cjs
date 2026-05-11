@@ -1,12 +1,15 @@
 module.export = {
   apps : [{
     name: "quiz-app",
-    script: "./app.js",
+    script: "server.js",
+    cwd: "./server",
     env: {
       NODE_ENV: "development",
     },
     env_production: {
       NODE_ENV: "production",
+      NODE_OPTIONS: "--use-openssl-ca",
+      MONGO_URI: "mongodb+srv://an225ee_db_user:aUYhxxUDkvgTe71M@cluster1.o1dz1am.mongodb.net/"
     }
   }]
 }
