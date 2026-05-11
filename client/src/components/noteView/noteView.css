@@ -1,13 +1,36 @@
 body {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   background-color: var(--secondary-color);
 }
 
 .noteBodyArea {
-  width: 70dvh;
-  padding-top: 10dvh;
+  width: 70dvw;
+  margin-top: 2rem;
   background-color: var(--page-color);
   color: var(--text-color);
+  border: transparent;
+  height: calc(100dvh - 2rem);
+  font-family: 'Inter', sans-serif;
+  resize: none;
+  padding: 20px; 
+  box-sizing: border-box;
+}
+
+.noteBodyArea:focus {
+  border: none;
+}
+
+.noteTitleInput {
+  background-color: var(--page-color);
+  font-family: 'Inter', sans-serif;
+  border-color: transparent;
+}
+
+.noteTop {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
 }

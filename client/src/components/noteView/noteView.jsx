@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './noteView.css'
 
 export default function NoteView() {
   const [noteBody, setNoteBody] = useState('')
@@ -9,7 +10,7 @@ export default function NoteView() {
 
   return (
     <div>
-      <div>
+      <div className="noteTop">
         <input type="text" placeholder="Untitled note" className="noteTitleInput" />
         <button className="quizBtn" onClick={handleQuiz}>
         Quiz it!
