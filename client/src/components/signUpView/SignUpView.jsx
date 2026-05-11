@@ -12,10 +12,17 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
 
 
 
+  /**
+   * Handles the sign up, connecting the submit-button to the
+   * signup-request, 
+   * @param {*} e 
+   * @returns When signup is successful it returns you to the login-form again.
+   */
   const handleSignup = async (e) => {
     e.preventDefault()
     setError(null)
 
+    try {
     const response = await fetch('/api/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -24,15 +31,24 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
 
     const data = await response.json()
 
-    if (response.status === 409) {
-      setError('User already exists, try again')
-    } else if (!response.ok){
-      setError(data.message || 'Something went wrong on the server')
-    } else {
+    if (response.ok) {
       onSignUpSuccess()
+      return
+    }
+    
+    if (response.status === 409 || response.status === 400) {
+      setError(data.error || 'User already exists, try again')
+    } else {
+      setError('Something went wrong on the server')
+    }
+  } catch (err) {
+    setError('Could not connect to the server')
     }
   }
-  // The form for signing up an account
+
+  /**
+   * The form for signing up an account.  
+   */ 
   return (
   <div className="signupForm">
     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
@@ -41,7 +57,7 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
       <input type="text" placeholder="Your username" value={username} onChange={(e) => setUsername(e.target.value)}/>
       <input type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-      <button class="submitBtn" type="submit">Register account </button>
+      <button className="submitBtn" type="submit">Register account </button>
       <span onClick={toggleView}>Back to logging in</span>
     </form>
   </div>
