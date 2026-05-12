@@ -1,15 +1,18 @@
 import { useState } from 'react'
+import Dashboard from '../dashboard/dashboard.jsx'
 import './noteView.css'
 
 export default function NoteView() {
   const [noteBody, setNoteBody] = useState('')
 
-  const handleQuiz = () => {
-     console.log('Generating quiz from notes;', noteBody)
+  const handleQuiz = async (e) => {
+    e.preventDefault()
+    console.log('Generating quiz from notes;', noteBody)
   }
 
   return (
-    <div>
+    <div className="content">
+      <Dashboard />
       <div className="noteTop">
         <input type="text" placeholder="Untitled note" className="noteTitleInput" />
         <button className="quizBtn" onClick={handleQuiz}>

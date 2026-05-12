@@ -2,7 +2,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background-color: var(--secondary-color);
 }
 
 .noteBodyArea {
@@ -29,8 +28,16 @@ body {
 }
 
 .noteTop {
+  width: 70dvw;
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+  align-items: center;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }

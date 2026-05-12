@@ -30,11 +30,11 @@ form {
   border: none;
   max-width: fit-content;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .signUpBtn:hover {
-  border-radius: 24px;
+  border-radius: 30px;
   background-color: #a1a3b6;
 }
 
@@ -51,7 +51,7 @@ form {
 }
 
 .loginBtn:hover {
-  border-radius: 24px;
+  border-radius: 30px;
   background-color: #d0e74a;  
 }
 
