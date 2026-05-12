@@ -1,0 +1,52 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  height: 50dvh;
+  width: 50dvw;
+  border-radius: 22px;
+  background-color: var(--page-color)
+}
+
+.options {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+.optionBtn {
+  border-radius: 30px;
+  background-color: var(--secondary-color);
+  color: var(--page-color);
+  transition: background-color 0.3s ease;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.optionBtn:hover:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: var(--shadow);
+}
+
+.optionBtn.correct {
+  background-color: var(--accent-color);
+  color: var(--page-color);
+}
+
+.optionBtn.wrong {
+  background-color: #f10e0e !important;
+  color: var(--page-color);
+}
+
+.optionBtn:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.nextBtn {
+  border-radius: 30px;
+  background-color: var(--secondary-color);
+  color: var(--page-color);
+  transition: background-color 0.3s ease;
+  padding: 10px;
+  border: none;
+}
