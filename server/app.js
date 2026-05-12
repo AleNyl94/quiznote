@@ -18,7 +18,7 @@ app.use(session({
     saveUninitialized: false,
     cookie:{ secure: false }
 }))
-app.use('/', mainRouter)
+app.use('/api', mainRouter)
 
 app.use((err, req, res, next) => {
     console.error(err)

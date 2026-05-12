@@ -5,8 +5,6 @@
  */
 import 'dotenv/config'
 import app from './app.js'
-import { Server } from 'socket.io'
-import { setupSocket } from './socket.js'
 import http from 'http'
 import mongoose from 'mongoose'
 // import { fileURLToPath } from 'url'
@@ -19,13 +17,6 @@ mongoose.connect(mongoURI)
   .then(() => console.log('Connected to database'))
   .catch(err => console.error('Error with database', err))
 
-
-const server = http.createServer(app)
-const io = new Server(server, {
-  cors: { origin: "*" }
-})
-
-setupSocket(io)
 
 app.get('/api/me', (req, res) => {
   console.log("Session check for user:", req.session?.user)
