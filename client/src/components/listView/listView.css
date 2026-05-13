@@ -1,0 +1,15 @@
+.note-item {
+  list-style: none;
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: #dadada(0.1);
+  border-radius: 8px;
+  transition: transform 0.2s;
+  display: flex;
+  justify-content: space-between;
+}
+
+.note-item:hover {
+  transform: translateX(10px);
+  background-color: #c4c4c4(0.2);
+}
