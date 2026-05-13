@@ -1,10 +1,9 @@
-import { useState } from 'react'
-import { useMemo } from 'react' 
+import { useState, useMemo } from 'react'
 
-export function QuizCard(data, currentIndex, totalQuestions, nextQuestion) {
+export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion }) {
 
   const [ selectedAnswer, setSelectedAnswer ] = useState(null)
-  const [ hasAnswered, setHasAnswered ] = useState(null)
+  const [ hasAnswered, setHasAnswered ] = useState(false)
 
   const handleAnswer = (option) => {
     if (hasAnswered) {
@@ -16,11 +15,15 @@ export function QuizCard(data, currentIndex, totalQuestions, nextQuestion) {
   
   // Shuffles the answers so the correct answer and vice versa 
   // does not show in the same box for every question
-  const shuffledOptions =React.useMemo(() => {
+  const shuffledOptions = useMemo(() => {
+    if (!data) return []
+
     const options = [data.trueAnswer, data.falseAnswer]
     return options.sort(() => Math.random() - 0.5)
   }, [data])
 
+  if (!data) return null
+  
   /**
    * The quiz card-modal, 
    */
