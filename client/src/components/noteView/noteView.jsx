@@ -3,11 +3,25 @@ import Dashboard from '../dashboard/dashboard.jsx'
 import './noteView.css'
 
 export default function NoteView() {
+  const [ noteTitle, setNoteTitle ] = useState('')
   const [noteBody, setNoteBody] = useState('')
+  const [showQuiz, setShowQuiz] = useState(false)
 
+
+  /**
+   * Sends the quiz-request
+   */
   const handleQuiz = async (e) => {
     e.preventDefault()
     console.log('Generating quiz from notes;', noteBody)
+  }
+
+  /**
+   * Toggles the quiz display, resets the score if closed.
+   */
+  const toggleModal = () => {
+  setShowQuiz(false);
+  currentIndex === 0 
   }
 
   /**
@@ -39,10 +53,15 @@ export default function NoteView() {
   return (
     <div className="content">
       <Dashboard />
-      <div className="noteTop">
-        <input type="text" placeholder="Untitled note" className="noteTitleInput" />
-        <button className="saveBtn" onClick={saveNote}>Save</button>
-        <button className="quizBtn" onClick={handleQuiz}>Quiz it!</button>
+        <div className="noteTop">
+          <input type="text" 
+            value={title} 
+            placeholder="Untitled note" 
+            className="noteTitleInput" 
+            onChange={(e) => setNoteTitle(e.target.value)}
+          />
+        <button className="saveBtn" onClick={handleSave}>Save</button>
+        <button className="quizBtn" onClick={() => setShowQuiz(true)}>Quiz it!</button>
       </div>
       <textarea
         className="noteBodyArea"
@@ -50,6 +69,15 @@ export default function NoteView() {
         value={noteBody}
         onChange={(e) => setNoteBody(e.target.value)}
         />
+        {showQuiz && (
+      <QuizCard 
+        data={quizData} 
+        onClose={() => setShowQuiz(false)} 
+        currentIndex={currentIndex}
+        totalQuestions={quizData.length}
+        nextQuestion={handleNextQuestion}
+      />
+    )}
     </div>
   )
 }

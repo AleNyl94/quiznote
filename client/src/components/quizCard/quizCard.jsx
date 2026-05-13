@@ -4,13 +4,38 @@ export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion }) {
 
   const [ selectedAnswer, setSelectedAnswer ] = useState(null)
   const [ hasAnswered, setHasAnswered ] = useState(false)
+  const [ score, setScore ] = useState(0)
+  const [ showResults, setShowResults ] = useState(false)
 
+  /**
+   * Handling selected answer-action.
+   *
+   * @param {} option The alternative in the quiz.
+   * @returns Stops the logic if answered.
+   */
   const handleAnswer = (option) => {
     if (hasAnswered) {
       return
     }
     setSelectedAnswer(option)
     setHasAnswered(true)
+
+    if (option === data.trueAnswer) {
+      setScore(prev => prev + 1)
+    }
+  }
+
+  /**
+   * Handling the next question in the quiz.
+   */
+  const handleNext = () => {
+    if (currentIndex < totalQuestions - 1) {
+      nextQuestion()
+      setHasAnswered(false)
+      setSelectedAnswer(null)
+    } else {
+      setShowResults(true)
+    }
   }
   
   // Shuffles the answers so the correct answer and vice versa 
@@ -25,7 +50,7 @@ export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion }) {
   if (!data) return null
   
   /**
-   * The quiz card-modal, 
+   * The quiz card-modal, displaying the question and alternatives.
    */
   return (
     <div className="modal">
