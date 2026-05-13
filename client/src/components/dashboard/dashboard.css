@@ -1,0 +1,48 @@
+nav {
+  display: flex;
+  justify-content: flex-start;
+  background-color: var(--secondary-color);
+  width: 100dvw;
+  height: 20dbh;
+}
+
+.dashboardlist {
+  display: flex;
+  flex-direction: row;
+}
+
+.dashBtn {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  color: var(--page-color);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.dashBtn:hover {
+  color: #a8a8a8;
+}
+
+.logOutBtn {
+  padding: 12px 15px;
+  border-radius: var(--border-radius);
+  background-color: var(--primare-color);
+  color: var(--text-color);
+  border: none;
+  max-width: fit-content;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.logOutBtn:hover {
+  border-radius: 30px;
+  background-color: #d6d5d5;
+}
+
+.content-area {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: transparent;
+}
