@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 
-export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion }) {
+export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion, onClose }) {
 
   const [ selectedAnswer, setSelectedAnswer ] = useState(null)
   const [ hasAnswered, setHasAnswered ] = useState(false)
@@ -30,9 +30,9 @@ export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion }) {
    */
   const handleNext = () => {
     if (currentIndex < totalQuestions - 1) {
-      nextQuestion()
       setHasAnswered(false)
       setSelectedAnswer(null)
+      nextQuestion()
     } else {
       setShowResults(true)
     }
@@ -56,11 +56,15 @@ export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion }) {
     <div className="modal">
       <div className="card-content">
         <button className="closeBtn">X</button>
+
+        {showResults ? (
+        <>
         <h2>QUIZ TIME</h2>
         <p className="question-text">{data.question}</p>
         <div className="options">
           {shuffledOptions.map((option, index) => (
             <button
+              key={index}
               disabled={hasAnswered}
               className={`optionBtn ${hasAnswered && option === data.trueAnswer ? 'correct' : ''} ${selectedAnswer === option && option !== data.trueAnswer ? 'wrong' : ''}`}
               onClick={() => handleAnswer(option)}
@@ -70,9 +74,17 @@ export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion }) {
           ))}
         </div>
         {hasAnswered && (
-          <button className="nextBtn" onClick={nextQuestion}>
+          <button className="nextBtn" onClick={handleNext}>
             {currentIndex < totalQuestions - 1 ? 'Next Question' : 'Show Result'}
           </button>
+        )}
+        </>
+        ) : (
+        <div className="results">
+          <h2>Quiz Finished!</h2>
+          <p>You got <strong>{score}</strong> out of {totalQuestions} correct.</p>
+          <button className="nextBtn" onClick={onClose}>Close</button>
+        </div>  
         )}
       </div>
     </div>

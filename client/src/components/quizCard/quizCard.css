@@ -1,6 +1,10 @@
 .modal {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  top: 0;
+  left: 0;
   height: 50dvh;
   width: 50dvw;
   border-radius: 22px;
@@ -49,4 +53,17 @@
   transition: background-color 0.3s ease;
   padding: 10px;
   border: none;
+}
+
+.results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 50dvh;
+  width: 50dvw;
+  border-radius: 22px;
+  background-color: var(--page-color)
 }
