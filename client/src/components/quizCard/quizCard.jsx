@@ -48,16 +48,16 @@ export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion, onC
   }, [data])
 
   if (!data) return null
-  
+
   /**
    * The quiz card-modal, displaying the question and alternatives.
    */
   return (
     <div className="modal">
       <div className="card-content">
-        <button className="closeBtn">X</button>
+        <button className="closeBtn" onClick={onClose}>X</button>
 
-        {showResults ? (
+        {!showResults ? (
         <>
         <h2>QUIZ TIME</h2>
         <p className="question-text">{data.question}</p>

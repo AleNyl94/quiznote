@@ -1,49 +1,60 @@
 import { useState } from 'react'
 import Dashboard from '../dashboard/dashboard.jsx'
 import './noteView.css'
+import { QuizCard } from '../quizCard/quizCard.jsx'
 
 export default function NoteView() {
   const [ noteTitle, setNoteTitle ] = useState('')
   const [noteBody, setNoteBody] = useState('')
   const [showQuiz, setShowQuiz] = useState(false)
-
+  const [quizTasks, setQuizTasks] = useState([])
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   /**
    * Sends the quiz-request
    */
   const handleQuiz = async (e) => {
-    e.preventDefault()
-    console.log('Generating quiz from notes;', noteBody)
+    try {
+      const response = await fetch('/api/generate-quiz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: noteBody })
+      })
+      const data = await response.json()
+
+      const mappedTasks = data.task.map(item => ({
+        question: item.question,
+        trueAnswer: item.trueAnswer,
+        falseAnswer: item.falseAnswer
+      }))
+    setQuizTasks(mappedTasks)
+    setCurrentIndex(0)
+    setShowQuiz(true)
+    } catch (err) {
+      console.error('Could not generate quiz', err)
+    }
   }
 
   /**
    * Toggles the quiz display, resets the score if closed.
    */
   const toggleModal = () => {
-  setShowQuiz(false);
-  currentIndex === 0 
+    setShowQuiz(false);
+    currentIndex === 0 
   }
 
   /**
    * Function for saving the note
    */
-  const saveNote = async (noteData) => {
-    try {
-      const response = await fetch('api/notes', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(noteData)
-      })
+  const handleSave = () => {
+    saveNote({ title: noteTitle, content: noteBody })
+  }
 
-      if (response.ok) {
-        const savedNote = await response.json()
-        console.log("Note is saved!", savedNote)
-    } 
-    } catch (error) {
-      console.error("Could not save:", error);
-    }
+  /**
+   * Sends the user to the next question from the question-battery.
+   */
+  const handleNextQuestion = () => {
+    setCurrentIndex(prev => prev + 1)
   }
 
   /**
@@ -55,7 +66,7 @@ export default function NoteView() {
       <Dashboard />
         <div className="noteTop">
           <input type="text" 
-            value={title} 
+            value={noteTitle} 
             placeholder="Untitled note" 
             className="noteTitleInput" 
             onChange={(e) => setNoteTitle(e.target.value)}
@@ -71,10 +82,10 @@ export default function NoteView() {
         />
         {showQuiz && (
       <QuizCard 
-        data={quizData} 
+        data={quizTasks[currentIndex]} 
         onClose={() => setShowQuiz(false)} 
         currentIndex={currentIndex}
-        totalQuestions={quizData.length}
+        totalQuestions={quizTasks.length}
         nextQuestion={handleNextQuestion}
       />
     )}
