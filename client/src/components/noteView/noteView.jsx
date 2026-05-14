@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Dashboard } from '../dashboard/dashboard.jsx'
 import './noteView.css'
-import { QuizCard } from '../quizCard/quizCard.jsx'
+import QuizCard from '../quizCard/quizCard.jsx'
 
-export default function NoteView() {
+/**
+ * The function for the note-creation view. 
+ */
+export default function NoteView({ saveNote }) {
   const [ noteTitle, setNoteTitle ] = useState('')
   const [noteBody, setNoteBody] = useState('')
   const [showQuiz, setShowQuiz] = useState(false)
@@ -63,7 +65,6 @@ export default function NoteView() {
    */
   return (
     <div className="content">
-      <Dashboard />
         <div className="noteTop">
           <input type="text" 
             value={noteTitle} 

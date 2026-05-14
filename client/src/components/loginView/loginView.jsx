@@ -28,7 +28,7 @@ export default function LoginView({ toggleView, onLoginSuccess }) {
     const data = await response.json()
 
     if (response.ok) {
-      onLoginSuccess(data.user)
+      onLoginSuccess(data)
     } else {
       setErrorMessage(data.message || 'Login failed')
     }
@@ -44,7 +44,7 @@ export default function LoginView({ toggleView, onLoginSuccess }) {
       <h1>QUIZNOTE</h1>
       <input type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-      <button class="loginBtn" onClick={handleLogin}>Log in</button>
+      <button class="loginBtn" type="submit">Log in</button>
       <p>No account?</p>
       <button class="signUpBtn" onClick={toggleView}>Sign up</button>
     </form>
