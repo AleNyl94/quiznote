@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import '../dashboard/dashboard.jsx'
+import './listView.css'
+import { Dashboard } from '../dashboard/dashboard.jsx'
 
-export default function ListView( user ) {
+export function ListView( user ) {
   const [ notes, setNotes ] = useState([])
   const [ loading, setLoading ] = useState(true)
 

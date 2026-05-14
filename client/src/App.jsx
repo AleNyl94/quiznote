@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import LoginView from './components/loginView/loginView.jsx'
-import SignUpView from './components/signUpView/SignUpView.jsx'
-import NoteView from './components/noteView/noteView.jsx'
+import { LoginView } from './components/loginView/loginView.jsx'
+import { SignUpView } from './components/signUpView/SignUpView.jsx'
+import { NoteView } from './components/noteView/noteView.jsx'
 
-function App() {
+export function App() {
 
 const [currentView, setCurrentView] = useState('login')
 const toggleView = () => {
@@ -18,9 +18,10 @@ useEffect(() => {
   fetch('api/me', { credentials: 'include'})
     .then(res => {
       if(res.ok) setCurrentView('notes')
+      else setCurrentView('login')
     })
+    .catch(() => setCurrentView('login'))
   }, [])
-
 
 return (
   <div className="App">

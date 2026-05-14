@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
+import './quizCard.css'
 
-export function QuizCard({ data, currentIndex, totalQuestions, nextQuestion, onClose }) {
+export default function QuizCard({ data, currentIndex, totalQuestions, nextQuestion, onClose }) {
 
   const [ selectedAnswer, setSelectedAnswer ] = useState(null)
   const [ hasAnswered, setHasAnswered ] = useState(false)

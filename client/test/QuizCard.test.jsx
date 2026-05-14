@@ -1,11 +1,11 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
-import { QuizCard } from '../src/components/quizCard/quizCard.jsx'
+import QuizCard from '../src/components/quizCard/quizCard.jsx'
 
 const mockData = {
-  question = 'What is the capital of France?',
-  trueAnswer = 'Paris',
-  falseAnswer = 'Stockholm'
+  question: 'What is the capital of France?',
+  trueAnswer: 'Paris',
+  falseAnswer: 'Stockholm'
 }
 
 

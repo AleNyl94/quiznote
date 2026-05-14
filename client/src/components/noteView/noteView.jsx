@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Dashboard from '../dashboard/dashboard.jsx'
+import { Dashboard } from '../dashboard/dashboard.jsx'
 import './noteView.css'
 import { QuizCard } from '../quizCard/quizCard.jsx'
 
