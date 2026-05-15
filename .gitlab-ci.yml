@@ -10,6 +10,7 @@ build-job:
   script:
     - cd server
     - npm ci
+<<<<<<< HEAD
   artifacts:
     paths:
       - server/node_modules/
@@ -18,6 +19,8 @@ test-job:
   stage: test
   script:
     - cd server
+=======
+>>>>>>> b7dff287993dd0c3763478a0eb2ff8fdebeb2992
     - npm run eslint
     - npm test
   dependencies:
