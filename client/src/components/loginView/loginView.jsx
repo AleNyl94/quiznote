@@ -4,8 +4,9 @@
  * there is a possibility to sign up.
  */ 
 import { useState } from 'react'
+import './loginView.css'
 
-export default function LoginView({ onLoginSuccess }) {
+export default function LoginView({ toggleView, onLoginSuccess }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -17,35 +18,36 @@ export default function LoginView({ onLoginSuccess }) {
     setErrorMessage()
 
   try {
-    const response = await fetch('/login', {
+    const response = await fetch('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body: JSON.stringify({ email, password }),
+      credentials: 'include'
     })
 
     const data = await response.json()
 
     if (response.ok) {
-      onLoginSuccess(data.user)
+      onLoginSuccess(data)
     } else {
       setErrorMessage(data.message || 'Login failed')
     }
   } catch (err) {
-    setErrorMessage('Unable to connect to server')
+    setErrorMessage('Unable to connect to server', err.message)
     }
   }
   // The form for the login
   return (
   <div class="loginForm">
-    <h1>Welcome to QuizNote</h1>
-    <h3>Log in:</h3>
     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     <form onSubmit={handleLogin}>
+      <h1>QUIZNOTE</h1>
       <input type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-      <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-      <button onClick={handleLogin}>Log in</button>
+      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <button class="loginBtn" type="submit">Log in</button>
+      <p>No account?</p>
+      <button class="signUpBtn" onClick={toggleView}>Sign up</button>
     </form>
-    <p>No account?</p><span class="signUpBtn"> register here!</span>
   </div>
   )
 }
