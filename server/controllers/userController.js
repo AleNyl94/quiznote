@@ -4,6 +4,7 @@ export const userController = {
 
   signup: async (req, res) => {
     try {
+      console.log("Request Body:", req.body)
       const existingUser = await User.findOne({ 
         $or: [ 
           { username: req.body.username },
