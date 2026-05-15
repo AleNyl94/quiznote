@@ -22,7 +22,7 @@ app.use(session({
         sameSite: 'strict'
     }
 }))
-app.use('/', mainRouter)
+app.use('/api', mainRouter)
 
 app.use((err, req, res, next) => {
     console.error(err)

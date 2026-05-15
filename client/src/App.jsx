@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import LoginView from './components/loginView/loginView.jsx'
 import SignUpView from './components/signUpView/SignUpView.jsx'
 import NoteView from './components/noteView/noteView.jsx'
+import Dashboard from './components/dashboard/dashboard.jsx'
 
 export function App() {
 

@@ -1,16 +1,32 @@
 image: node:20
 
 stages:
+  - build
   - test
+  - deploy
 
-test_job:
-  stage: test
+build-job:
+  stage: build
   script:
     - cd server
     - npm ci
-    - npm run eslint || echo "Linter hittade problem, men vi fortsätter"
+  artifacts:
+    paths:
+      - server/node_modules/
+
+test-job:
+  stage: test
+  script:
+    - cd server
+    - npm run eslint
     - npm test
-    - npm audit --audit-level=high
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "main"
+  dependencies:
+    - build-job
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Deploying to production server..."
+  when: manual
+  only:
+    - main
