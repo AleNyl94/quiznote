@@ -8,7 +8,7 @@ test_job:
   script:
     - cd server
     - npm ci
-    - npm run eslint || echo "Linter hittade problem, men vi fortsätter"
+    - npm run eslint
     - npm test
     - npm audit --audit-level=high
   rules:
