@@ -24,7 +24,7 @@ test-job:
     - cd ..
     - cd client
     - npm ci
-    - npm run lint   # Om du har lint-script i client/package.json
+    - npm run eslint
     - npm test
 
   dependencies:
