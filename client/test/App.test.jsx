@@ -3,7 +3,7 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import { App } from '../src/App.jsx'
 
-global.fetch = vi.fn()
+globalThis.fetch = vi.fn()
 
 /**
  * Tests the login to note-functionality.
@@ -37,8 +37,8 @@ describe('App Component Navigation', () => {
     const emailInput = await screen.findByPlaceholderText(/your email/i)
     const passwordInput = screen.getByPlaceholderText(/password/i)
 
-    fireEvent.change(screen.getByPlaceholderText(/your email/i), { target: { value: 'test@test.com' } })
-    fireEvent.change(screen.getByPlaceholderText(/password/i), { target: { value: 'password' } })
+    fireEvent.change(emailInput), { target: { value: 'test@test.com' } }
+    fireEvent.change(passwordInput), { target: { value: 'password' } }
 
     const loginBtn = screen.getByRole('button', { name: /log in/i })
     fireEvent.submit(loginBtn)

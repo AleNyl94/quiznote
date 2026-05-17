@@ -28,7 +28,6 @@ export default function NoteView({ saveNote }) {
       const options = [item.trueAnswer, item.falseAnswer];
       return {
         question: item.question,
-        // Slumpa här i event-handlern, det är 100% tillåtet
         shuffledOptions: options.sort(() => Math.random() - 0.5) 
       }
     })

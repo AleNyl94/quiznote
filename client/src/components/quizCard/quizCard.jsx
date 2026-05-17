@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './quizCard.css'
 
 export default function QuizCard({ data, currentIndex, totalQuestions, nextQuestion, onClose }) {
@@ -7,7 +7,6 @@ export default function QuizCard({ data, currentIndex, totalQuestions, nextQuest
   const [ hasAnswered, setHasAnswered ] = useState(false)
   const [ score, setScore ] = useState(0)
   const [ showResults, setShowResults ] = useState(false)
-  const [shuffledOptions, setShuffledOptions] = useState([])
 
   /**
    * Handling selected answer-action.
@@ -57,7 +56,7 @@ export default function QuizCard({ data, currentIndex, totalQuestions, nextQuest
         <h2>QUIZ TIME</h2>
         <p className="question-text">{data.question}</p>
         <div className="options">
-          {shuffledOptions.map((option, index) => (
+          {data.shuffledOptions.map((option, index) => (
             <button
               key={index}
               disabled={hasAnswered}

@@ -42,7 +42,7 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
       setError('Something went wrong on the server')
     }
   } catch (err) {
-    setError('Could not connect to the server')
+    setError('Could not connect to the server', err)
     }
   }
 

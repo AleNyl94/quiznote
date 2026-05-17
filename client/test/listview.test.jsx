@@ -1,6 +1,6 @@
 /** @vitest-environment jsdom */
-import { render, screen, waitFor, cleanup } from '@testing-library/react'
-import { describe, it, expect, afterEach } from 'vitest'
+import { render, screen, cleanup } from '@testing-library/react'
+import { vi, describe, it, expect, afterEach } from 'vitest'
 import ListView from '../src/components/listView/listView.jsx'
 
 /**
@@ -32,7 +32,7 @@ describe('ListView Component', () => {
       username: 'TestUser',
       notes: mockNotes
     }
-    global.fetch = vi.fn().mockResolvedValue({
+    globalThis.fetch = vi.fn().mockResolvedValue({
     ok: true,
     json: () => Promise.resolve(mockNotes),
     })
@@ -52,7 +52,7 @@ describe('ListView Component', () => {
   vi.restoreAllMocks()
   })
   it('Should show a message if no notes found', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
+    globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: () => Promise.resolve([]),
     })

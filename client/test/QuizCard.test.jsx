@@ -61,8 +61,6 @@ describe('QuizCard Component', () => {
     
     const optionBtn = screen.getByText('Volcanic ash')
     fireEvent.click(optionBtn)
-    
-    const allButtons = screen.getAllByRole('button')
 
     expect(screen.getByText('Volcanic ash')).toBeDisabled()
     expect(screen.getByText('Portland cement')).toBeDisabled()

@@ -23,7 +23,7 @@ describe('SignUpView Component', () => {
   })
 
   it('should call the signup API with the correct data', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
+    globalThis.fetch = vi.fn().mockResolvedValue({
       ok: true,
       json: () => Promise.resolve({ message: 'User created' })
     })
@@ -42,7 +42,7 @@ describe('SignUpView Component', () => {
     fireEvent.click(signupBtn)
 
     await waitFor(() => {
-      expect(global.fetch).toHaveBeenCalledWith('/api/signup', expect.objectContaining({
+      expect(globalThis.fetch).toHaveBeenCalledWith('/api/signup', expect.objectContaining({
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
