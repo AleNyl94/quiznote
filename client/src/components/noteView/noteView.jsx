@@ -15,7 +15,7 @@ export default function NoteView({ saveNote }) {
   /**
    * Sends the quiz-request
    */
-  const handleQuiz = async (e) => {
+  const handleQuiz = async () => {
     try {
       const response = await fetch('/api/generate-quiz', {
         method: 'POST',
@@ -24,11 +24,15 @@ export default function NoteView({ saveNote }) {
       })
       const data = await response.json()
 
-      const mappedTasks = data.task.map(item => ({
+      const mappedTasks = data.task.map(item => {
+      const options = [item.trueAnswer, item.falseAnswer];
+      return {
         question: item.question,
-        trueAnswer: item.trueAnswer,
-        falseAnswer: item.falseAnswer
-      }))
+        // Slumpa här i event-handlern, det är 100% tillåtet
+        shuffledOptions: options.sort(() => Math.random() - 0.5) 
+      }
+    })
+
     setQuizTasks(mappedTasks)
     setCurrentIndex(0)
     setShowQuiz(true)
@@ -73,7 +77,7 @@ export default function NoteView({ saveNote }) {
             onChange={(e) => setNoteTitle(e.target.value)}
           />
         <button className="saveBtn" onClick={handleSave}>Save</button>
-        <button className="quizBtn" onClick={() => setShowQuiz(true)}>Quiz it!</button>
+        <button className="quizBtn" onClick={handleQuiz}>Quiz it!</button>
       </div>
       <textarea
         className="noteBodyArea"
@@ -84,7 +88,7 @@ export default function NoteView({ saveNote }) {
         {showQuiz && (
       <QuizCard 
         data={quizTasks[currentIndex]} 
-        onClose={() => setShowQuiz(false)} 
+        onClose={() => {toggleModal}} 
         currentIndex={currentIndex}
         totalQuestions={quizTasks.length}
         nextQuestion={handleNextQuestion}

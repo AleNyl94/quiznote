@@ -43,6 +43,10 @@ return (
       <SignUpView onSignUpSuccess={() => setCurrentView('login')} toggleView={toggleView}/>
     )}
 
+    {currentView === 'dashboard' && (
+      <Dashboard user={user} onNavigateToNotes={() => setCurrentView('notes')} />
+    )}
+
     {currentView === 'notes' && (
       <NoteView onLogOut={() => setCurrentView('login')}/>
     )}

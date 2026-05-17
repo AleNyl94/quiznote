@@ -41,3 +41,37 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.saveBtn {
+  margin-top: 9px;
+  padding: 12px 15px;
+  border-radius: var(--border-radius);
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  max-width: fit-content;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.saveBtn:hover {
+  border-radius: 30px;
+  background-color: #a1a3b6; 
+}
+
+.quizBtn {
+  margin-top: 9px;
+  padding: 12px 15px;
+  border-radius: var(--border-radius);
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  border: none;
+  max-width: fit-content;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.quizBtn:hover {
+  border-radius: 30px;
+  background-color: #d0e74a;  
+}

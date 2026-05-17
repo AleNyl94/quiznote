@@ -6,7 +6,7 @@ import { useState } from 'react'
  * @returns The dashboard-component with a content-area beneath it, showing either
  * the note or list-view.
  */
-export default function Dashboard({ children, onLogOutSuccess }) {
+export default function Dashboard( onLogOutSuccess ) {
   const [ view, setView ] = useState('note')
   const [ activeNote, setActiveNote ] = useState(null)
 
@@ -53,12 +53,15 @@ export default function Dashboard({ children, onLogOutSuccess }) {
     <div className="dashboard">
       <nav>
         <div className="dashboardlist">
-          <button className="dashBtn" onClick={ () => setView('note')}>New note</button>
+          <button className="dashBtn" onClick={handleCreateNew}>New note</button>
           <button className="dashBtn" onClick={ () => setView('list')}>My notes</button>
           <button className="logOutBtn" onClick={handleLogOut}>Log Out</button>
         </div>
       </nav>
-      <main className="content-area">{children}</main>
+      <main className="content-area">
+        {view === 'note' && <NoteEditor activeNote={activeNote} />}
+        {view === 'list' && <NoteList onOpenNote={handleOpenNote} />}
+      </main>
     </div>
   )
 }

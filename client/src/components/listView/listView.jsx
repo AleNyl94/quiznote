@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './listView.css'
 import Dashboard from '../dashboard/dashboard.jsx'
 
-export default function ListView( user ) {
+export default function ListView({ user, noteClick }) {
   const [notes, setNotes] = useState([])
   const [ loading, setLoading ] = useState(true)
 
@@ -26,12 +26,12 @@ export default function ListView( user ) {
   }, [])
 
   if (loading) {
-  return <p>Loading your notes...</p>
+    return <p>Loading your notes...</p>
   }
 
   return (
     <>
-    <h1>{user.username} 's notes</h1>
+    <h1>{user?.username} 's notes</h1>
     <div className="list">
       {notes.length === 0 ? (
         <p>No notes yet, create some to see them here!</p>
