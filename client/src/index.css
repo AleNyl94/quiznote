@@ -49,20 +49,25 @@
 body {
   margin: 0;
   font-family: var(--sans);
-  background-color: var(--bg); /* Justerad från bg-main för att matcha variabler */
+  background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
 }
 
 #root {
-  width: 1126px;
+  width: 100%;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 0;
   text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+}
+
+.App {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /* --- TYPOGRAPHY --- */
@@ -108,7 +113,6 @@ code {
   background: var(--code-bg);
 }
 
-/* --- APP COMPONENTS (Hämtat från App.css) --- */
 .counter {
   font-size: 16px;
   padding: 5px 10px;

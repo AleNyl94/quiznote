@@ -17,11 +17,13 @@ export default function NoteView({ saveNote }) {
    */
   const handleQuiz = async () => {
     try {
-      const response = await fetch('/api/generate-quiz', {
+      const response = await fetch('/api/note/generate-quiz/${noteId}', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: noteBody })
+        body: JSON.stringify({ text: noteBody }),
+        withCredentials: 'true'
       })
+
       const data = await response.json()
 
       const mappedTasks = data.task.map(item => {
@@ -51,8 +53,12 @@ export default function NoteView({ saveNote }) {
   /**
    * Function for saving the note
    */
-  const handleSave = () => {
-    saveNote({ title: noteTitle, content: noteBody })
+  const handleSave = (e) => {
+    if (e && e.preventDefault) {
+      e.preventDefault()
+    }
+    const id = activeNote?._id || activeNote?.id || 'null' 
+    saveNote({ id: id, title: noteTitle, body: noteBody })
   }
 
   /**

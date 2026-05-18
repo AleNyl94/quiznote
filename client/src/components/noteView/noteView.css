@@ -44,7 +44,7 @@ body {
 
 .saveBtn {
   margin-top: 9px;
-  padding: 12px 15px;
+  padding: 10px 13px;
   border-radius: var(--border-radius);
   background-color: var(--secondary-color);
   color: var(--text-color);
@@ -61,7 +61,7 @@ body {
 
 .quizBtn {
   margin-top: 9px;
-  padding: 12px 15px;
+  padding: 10px 13px;
   border-radius: var(--border-radius);
   background-color: var(--accent-color);
   color: var(--text-color);

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import LoginView from './components/loginView/loginView.jsx'
 import SignUpView from './components/signUpView/SignUpView.jsx'
-import NoteView from './components/noteView/noteView.jsx'
 import Dashboard from './components/dashboard/dashboard.jsx'
 
 export function App() {
@@ -21,7 +20,7 @@ useEffect(() => {
     })
     .then(userData => {
       setUser(userData)
-      setCurrentView('notes')
+      setCurrentView('dashboard')
     })
     .catch(() => {
       setUser(null)
@@ -31,7 +30,7 @@ useEffect(() => {
 
 const handleLoginSuccess = (userData) => {
   setUser(userData)
-  setCurrentView('notes')
+  setCurrentView('dashboard')
 }
 return (
   <div className="App">
@@ -44,11 +43,8 @@ return (
     )}
 
     {currentView === 'dashboard' && (
-      <Dashboard user={user} onNavigateToNotes={() => setCurrentView('notes')} />
-    )}
-
-    {currentView === 'notes' && (
-      <NoteView onLogOut={() => setCurrentView('login')}/>
+      <Dashboard user={user} 
+      onLogOutSuccess={() => setCurrentView('login')} />
     )}
   </div>
   )

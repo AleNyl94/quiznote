@@ -1,9 +1,16 @@
-nav {
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navigation {
   display: flex;
   justify-content: flex-start;
   background-color: var(--secondary-color);
-  width: 100dvw;
-  height: 20dbh;
+  width: 100%;
+  height: 10dvh;
+  margin-top: 0;
 }
 
 .dashboard {
@@ -15,6 +22,8 @@ nav {
 .dashboardlist {
   display: flex;
   flex-direction: row;
+  gap: 40px;
+  padding: 0 20px;
 }
 
 .dashBtn {
@@ -31,19 +40,17 @@ nav {
 }
 
 .logOutBtn {
-  padding: 12px 15px;
-  border-radius: var(--border-radius);
-  background-color: var(--primare-color);
-  color: var(--text-color);
+  margin-right: 0px;
+  background-color: transparent;
   border: none;
-  max-width: fit-content;
+  text-decoration: underline;
+  color: var(--page-color);
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
 .logOutBtn:hover {
-  border-radius: 30px;
-  background-color: #d6d5d5;
+  color: #a8a8a8;
 }
 
 .content-area {
