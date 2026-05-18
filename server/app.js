@@ -7,6 +7,7 @@
 import express from 'express'
 import session from 'express-session'
 import mainRouter from './routes/router.js'
+import cors from 'cors'
 
 const app = express()
 
@@ -19,9 +20,15 @@ app.use(session({
     cookie:{
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24,
-        sameSite: 'strict'
+        sameSite: 'lax'
     }
 }))
+
+app.use(cors({
+  origin: 'http://cu1066.camp.lnu.se',
+  credentials: true
+}))
+
 app.use('/api', mainRouter)
 
 app.use((err, req, res, next) => {

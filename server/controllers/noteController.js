@@ -84,8 +84,12 @@ export const noteController = {
     const { noteId } = req.params
 
     const note = await Note.findById(noteId)
-    if(!note) {
+    if (!note) {
       return res.status(404).json('Note not found')
+    }
+
+    if (!note.body || note.body.length < 100) {
+      return res.status(400).json('Note is too short to quiz, please write more')
     }
     const quiz = await aiService.generateQuiz(note.body)
     res.json(quiz)

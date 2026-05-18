@@ -7,11 +7,9 @@
  * @returns Sends the user to the path if authorized.
  */
 export const checkAuth = (req, res, next) => {
-    if (res.locals.user) {
-        return next()
-    } else {
-        return res.status(401).json({ 
-          message: 'You have to be logged in to access this resource' 
-        })
-    }
+  if (!req.session || !req.session.user) {
+    return res.status(401).json({ error: 'Session missing' })
+  }
+   req.user = { id: req.session.user.id }
+   next()
 }
