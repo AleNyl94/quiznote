@@ -8,5 +8,6 @@ noteRouter.post('/', checkAuth, noteController.create)
 noteRouter.put('/:id', checkAuth, noteController.edit)
 noteRouter.get('/list', checkAuth, noteController.get)
 noteRouter.delete('/:id', checkAuth, noteController.delete)
+noteRouter.post('/quiz/:id', checkAuth, noteController.quiz)
 
 export default noteRouter
