@@ -14,7 +14,15 @@ export const noteController = {
    */
   create: async (req, res) => {
     try {
-      const savedNote = await new Note(req.body).save()
+      const { title, body } = req.body
+
+      const newNote = new Note({
+        title: req.body.title,
+        body: req.body.body,
+        owner: req.session.user.id
+      })
+
+      const savedNote = await newNote.save()
       res.status(201).json(savedNote)
     } catch (err) {
       res.status(400).json({ error: err.message })
@@ -29,7 +37,7 @@ export const noteController = {
    */
   get: async (req, res) => {
     try {
-      const notes = await Note.find({ owner: res.locals.user._id }).populate('owner', 'email')
+      const notes = await Note.find({ owner: req.session.user.id }).populate('owner', 'email')
       res.json(notes)
     } catch (err) {
       res.status(500).json({ error: err.message })

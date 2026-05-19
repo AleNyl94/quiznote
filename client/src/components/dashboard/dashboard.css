@@ -28,8 +28,9 @@ html, body {
 
 .dashBtn {
   background-color: transparent;
+  font-weight: 700;
   border: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: var(--page-color);
   cursor: pointer;
   transition: all 0.3s ease-in-out;
@@ -42,8 +43,9 @@ html, body {
 .logOutBtn {
   margin-right: 0px;
   background-color: transparent;
+  font-weight: 700;
   border: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: var(--page-color);
   cursor: pointer;
   transition: all 0.3s ease-in-out;

@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react'
 import './listView.css'
 import Dashboard from '../dashboard/dashboard.jsx'
 
-export default function ListView({ user, noteClick }) {
+export default function ListView({ user, onOpenNote }) {
   const [notes, setNotes] = useState([])
   const [ loading, setLoading ] = useState(true)
 
   useEffect(() => {
     const fetchNotes = async () => {
       try { 
-        const response = await fetch('api/notes', {
+        const response = await fetch('/api/note/list', {
           credentials: 'include'
         })
       if (response.ok) {
@@ -31,7 +31,7 @@ export default function ListView({ user, noteClick }) {
 
   return (
     <>
-    <h1>{user?.username} 's notes</h1>
+    <h1>{user?.username}'s notes</h1>
     <div className="list">
       {notes.length === 0 ? (
         <p>No notes yet, create some to see them here!</p>
@@ -39,9 +39,9 @@ export default function ListView({ user, noteClick }) {
       <ul>
         {notes.map((note) => (
           <li 
-            key={note.id} 
+            key={note._id || note.id} 
             className="note-item"
-            onClick={() => noteClick(note)}
+            onClick={() => onOpenNote(note)}
             style={{ cursor: 'pointer' }}
           >
             <strong>{note.title}</strong>

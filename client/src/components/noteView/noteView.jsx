@@ -1,23 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './noteView.css'
 import QuizCard from '../quizCard/quizCard.jsx'
 
 /**
  * The function for the note-creation view. 
  */
-export default function NoteView({ saveNote }) {
+export default function NoteView({ activeNote, saveNote }) {
   const [ noteTitle, setNoteTitle ] = useState('')
   const [noteBody, setNoteBody] = useState('')
   const [showQuiz, setShowQuiz] = useState(false)
   const [quizTasks, setQuizTasks] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
 
+  useEffect(() => {
+    if (activeNote) {
+      setNoteTitle(activeNote.title || '')
+      setNoteBody(activeNote.body || '')
+    }
+  }, [activeNote])
+
   /**
    * Sends the quiz-request
    */
   const handleQuiz = async () => {
     try {
-      const response = await fetch('/api/note/generate-quiz/${noteId}', {
+      const noteId = activeNote?._id || activeNote?.id
+      const response = await fetch(`/api/note/generate-quiz/${noteId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: noteBody }),
@@ -46,8 +54,7 @@ export default function NoteView({ saveNote }) {
    * Toggles the quiz display, resets the score if closed.
    */
   const toggleModal = () => {
-    setShowQuiz(false);
-    currentIndex === 0 
+    setShowQuiz(false)
   }
 
   /**
@@ -57,8 +64,11 @@ export default function NoteView({ saveNote }) {
     if (e && e.preventDefault) {
       e.preventDefault()
     }
-    const id = activeNote?._id || activeNote?.id || 'null' 
-    saveNote({ id: id, title: noteTitle, body: noteBody })
+    const noteId = activeNote?._id || activeNote?.id || undefined
+
+    console.log('NoteView skickar till dashboard:', noteId, noteTitle, noteBody)
+
+    saveNote({ id: noteId, title: noteTitle, body: noteBody })
   }
 
   /**
@@ -93,7 +103,7 @@ export default function NoteView({ saveNote }) {
         {showQuiz && (
       <QuizCard 
         data={quizTasks[currentIndex]} 
-        onClose={() => {toggleModal}} 
+        onClose={toggleModal} 
         currentIndex={currentIndex}
         totalQuestions={quizTasks.length}
         nextQuestion={handleNextQuestion}

@@ -9,7 +9,7 @@ import './dashboard.css'
  * @returns The dashboard-component with a content-area beneath it, showing either
  * the note or list-view.
  */
-export default function Dashboard({ user, onLogOutSuccess }) {
+export default function Dashboard({ noteData, user, onLogOutSuccess }) {
   const [ view, setView ] = useState('note')
   const [ activeNote, setActiveNote ] = useState(null)
 
@@ -33,25 +33,29 @@ export default function Dashboard({ user, onLogOutSuccess }) {
 
   const handleSaveNote = async (noteData) => {
     try {
-      const isEdit = !!noteData.id
-      const url = activeNote?._id ? `api/note/${noteData._id}` : 'api/note'
+      const isEdit = !!(noteData.id && noteData.id !== 'null' && noteData.id !== 'undefined')
+
+      const url = isEdit ? `/api/note/${noteData.id}` : '/api/note'
       const method = isEdit ? 'PUT' : 'POST'
       
-      const response = await fetch('url', {
+      console.log(`Skickar ${method}-anrop till: ${url} (ID var: ${noteData.id})`)
+
+      const response = await fetch(url, {
         method: method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: id,
           title: noteData.title,
           body: noteData.body
         }),
-        credentials: 'true'
+        credentials: 'include'
       })
 
       if (response.ok) {
         const savedNote = await response.json()
         setActiveNote(savedNote)
         console.log('Note saved!')
+      } else {
+        console.error('Servern svarade med felkod:', response.status)
       }
     } catch (err) {
       console.error('Failed to save note', err)
@@ -90,7 +94,7 @@ export default function Dashboard({ user, onLogOutSuccess }) {
       </nav>
       <main className="content-area">
         {view === 'note' && <NoteView activeNote={activeNote} saveNote={handleSaveNote} />}
-        {view === 'list' && <ListView onOpenNote={handleOpenNote} />}
+        {view === 'list' && <ListView onOpenNote={handleOpenNote} user={user} />}
       </main>
     </div>
   )
