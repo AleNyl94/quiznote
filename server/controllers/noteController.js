@@ -52,13 +52,13 @@ export const noteController = {
    */
   edit: async (req, res) => {
     try {
-      const { note } = res.locals
-      if (!note) return res.status(404).json({ message: "Note not found" })
-        
+      const { id } = req.params
+      const note = await Note.findById(id)
+      if (!note) return res.status(404).json({ message: "Note is not found"})  
+      
       Object.assign(note, req.body)
-
       await note.save()
-      res.status(200).json(`Note ${note.title} is updated successfully`)
+      res.status(200).json(note)
     } catch (err) {
       res.status(400).json({ error: err.message })
     }
