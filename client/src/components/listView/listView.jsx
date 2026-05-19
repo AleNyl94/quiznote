@@ -48,6 +48,7 @@ export default function ListView({ user, onOpenNote }) {
             <span className="date">
               {new Date(note.createdAt).toLocaleDateString()}
             </span>
+            <button className="deleteBtn">Delete</button>
           </li>
         ))}
       </ul>

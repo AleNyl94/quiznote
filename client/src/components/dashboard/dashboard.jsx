@@ -62,12 +62,40 @@ export default function Dashboard({ noteData, user, onLogOutSuccess }) {
     }
   }
 
+   /**
+   * Handles the function sending a request to the backend to delete the note.
+   *
+   * @param {*} noteId The id of the note.
+   * @returns Sends you back if answered.
+   */
+  const handleDeleteNote = async (noteId) => {
+    if(!window.confirm("Are you sure you want to delete this?")) {
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/note/${noteId}`, {
+        method: 'DELETE',
+      })
+      if (response.ok) {
+        setNotes(prevNotes => prevNotes.filter(note => note._id !== noteId))
+      }
+      if (activeNote?._id == noteId) {
+        setActiveNote(null)
+      }
+      console.log('Note deleted!')
+      console.log('Deletion failed')
+    } catch (err) {
+      console.error('Could not delete note on server', err)
+    }
+  }
+
   /**
    * Handling the log-out, making a request to the backend to terminate the session.
    */
   const handleLogOut = async () => {
     try {
-      const response = await fetch('api/logout', {
+      const response = await fetch('/api/logout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
