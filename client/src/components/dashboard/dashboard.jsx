@@ -82,8 +82,8 @@ export default function Dashboard({ noteData, user, onLogOutSuccess }) {
       }
       if (activeNote?._id == noteId) {
         setActiveNote(null)
+        console.log('Note deleted!')
       }
-      console.log('Note deleted!')
       console.log('Deletion failed')
     } catch (err) {
       console.error('Could not delete note on server', err)
@@ -122,7 +122,7 @@ export default function Dashboard({ noteData, user, onLogOutSuccess }) {
       </nav>
       <main className="content-area">
         {view === 'note' && <NoteView activeNote={activeNote} saveNote={handleSaveNote} />}
-        {view === 'list' && <ListView onOpenNote={handleOpenNote} user={user} />}
+        {view === 'list' && <ListView onOpenNote={handleOpenNote} user={user} onDeleteNote={handleDeleteNote} />}
       </main>
     </div>
   )

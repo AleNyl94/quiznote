@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './listView.css'
 import Dashboard from '../dashboard/dashboard.jsx'
 
-export default function ListView({ user, onOpenNote }) {
+export default function ListView({ onDeleteNote, user, onOpenNote }) {
   const [notes, setNotes] = useState([])
   const [ loading, setLoading ] = useState(true)
 
@@ -29,6 +29,7 @@ export default function ListView({ user, onOpenNote }) {
     return <p>Loading your notes...</p>
   }
 
+
   return (
     <>
     <h1>{user?.username}'s notes</h1>
@@ -48,7 +49,14 @@ export default function ListView({ user, onOpenNote }) {
             <span className="date">
               {new Date(note.createdAt).toLocaleDateString()}
             </span>
-            <button className="deleteBtn">Delete</button>
+            <button 
+              className="deleteBtn" 
+              onClick={(event) => {
+                event.stopPropagation()
+                onDeleteNote(note)
+              }}>
+                Delete
+            </button>
           </li>
         ))}
       </ul>
