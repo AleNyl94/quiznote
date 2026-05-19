@@ -9,10 +9,10 @@ import './dashboard.css'
  * @returns The dashboard-component with a content-area beneath it, showing either
  * the note or list-view.
  */
-export default function Dashboard({ noteData, user, onLogOutSuccess }) {
+export default function Dashboard({ user, onLogOutSuccess }) {
   const [ view, setView ] = useState('note')
   const [ activeNote, setActiveNote ] = useState(null)
-
+  const [notes, setNotes] = useState([])
   /**
    * Toggles the list or note-view.
    * 
@@ -31,38 +31,7 @@ export default function Dashboard({ noteData, user, onLogOutSuccess }) {
     setView('note')
   }
 
-  const handleSaveNote = async (noteData) => {
-    try {
-      const isEdit = !!(noteData.id && noteData.id !== 'null' && noteData.id !== 'undefined')
-
-      const url = isEdit ? `/api/note/${noteData.id}` : '/api/note'
-      const method = isEdit ? 'PUT' : 'POST'
-      
-      console.log(`Skickar ${method}-anrop till: ${url} (ID var: ${noteData.id})`)
-
-      const response = await fetch(url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: noteData.title,
-          body: noteData.body
-        }),
-        credentials: 'include'
-      })
-
-      if (response.ok) {
-        const savedNote = await response.json()
-        setActiveNote(savedNote)
-        console.log('Note saved!')
-      } else {
-        console.error('Servern svarade med felkod:', response.status)
-      }
-    } catch (err) {
-      console.error('Failed to save note', err)
-    }
-  }
-
-   /**
+    /**
    * Handles the function sending a request to the backend to delete the note.
    *
    * @param {*} noteId The id of the note.
@@ -87,6 +56,42 @@ export default function Dashboard({ noteData, user, onLogOutSuccess }) {
       console.log('Deletion failed')
     } catch (err) {
       console.error('Could not delete note on server', err)
+    }
+  }
+
+  const handleSaveNote = async (formData) => {
+    try {
+      const id = activeNote?._id
+      const isEdit = !!id
+
+      const url = isEdit ? `/api/note/${id}` : '/api/note'
+      const method = isEdit ? 'PUT' : 'POST'
+      
+      console.log(`Skickar ${method}-anrop till: ${url} (ID var: ${noteData.id})`)
+
+      const response = await fetch(url, {
+        method: method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: formData.title,
+          body: formData.body
+        }),
+        credentials: 'include'
+      })
+
+      if (response.ok) {
+        const savedNote = await response.json()
+        if (isEdit) {
+        setNotes(prev => prev.map(n => n._id ===  id ? savedNote : n ))
+        } else {
+          setNotes(prev => [savedNote, ...prev])
+        }
+  
+        setActiveNote(savedNote)
+        console.log('Note saved!')
+      }
+    } catch (err) {
+      console.error('Failed to save note', err)
     }
   }
 
@@ -122,7 +127,7 @@ export default function Dashboard({ noteData, user, onLogOutSuccess }) {
       </nav>
       <main className="content-area">
         {view === 'note' && <NoteView activeNote={activeNote} saveNote={handleSaveNote} />}
-        {view === 'list' && <ListView onOpenNote={handleOpenNote} user={user} onDeleteNote={handleDeleteNote} />}
+        {view === 'list' && <ListView notes={notes}  setNotes={setNotes} onOpenNote={handleOpenNote} user={user} onDeleteNote={handleDeleteNote} />}
       </main>
     </div>
   )
