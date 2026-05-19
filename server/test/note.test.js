@@ -74,9 +74,11 @@ describe('Note isolated CRUD Test', () => {
   it('Should update the note', async () => {
     const noteFound = await Note.findById(savedNoteId)
 
-    const req = { body: { title: 'Updated Title' } }
+    const req = {
+      params: { id: savedNoteId },
+      body: { title: 'Updated Title' } 
+    }
     const res = {
-      locals: { note: noteFound },
       status: jest.fn().mockReturnThis(),
       json: jest.fn()
     }
