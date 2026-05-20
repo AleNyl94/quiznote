@@ -45,6 +45,8 @@ export default function Dashboard({ user, onLogOutSuccess }) {
     try {
       const response = await fetch(`/api/note/${noteId}`, {
         method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include'
       })
       if (response.ok) {
         setNotes(prevNotes => prevNotes.filter(note => note._id !== noteId))

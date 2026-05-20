@@ -53,7 +53,7 @@ export default function ListView({ user, onOpenNote, onDeleteNote }) {
               className="deleteBtn" 
               onClick={(event) => {
                 event.stopPropagation()
-                onDeleteNote(note)
+                onDeleteNote(note._id || note.id)
               }}>
                 Delete
             </button>

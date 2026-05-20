@@ -73,9 +73,12 @@ export const noteController = {
    */
   delete: async (req, res) => {
     try {
-      if (!res.locals.note) return res.status(404).json({ message: "Note not found" })
+      const { id } = req.params
+      const deletedNote = await Note.findByIdAndDelete(id)
 
-      await res.locals.note.deleteOne()
+      if (!deletedNote) {
+        return res.status(404).json({ message: 'Note not found' })
+      }
       res.status(204).end()
     } catch (err) {
       res.status(500).json({ error: err.message })
