@@ -32,7 +32,7 @@ export default function ListView({ user, onOpenNote, onDeleteNote }) {
 
   return (
     <>
-    <h1>{user?.username}'s notes</h1>
+    <h1>{user.username}'s notes</h1>
     <div className="list">
       {notes.length === 0 ? (
         <p>No notes yet, create some to see them here!</p>
@@ -45,10 +45,10 @@ export default function ListView({ user, onOpenNote, onDeleteNote }) {
             onClick={() => onOpenNote(note)}
             style={{ cursor: 'pointer' }}
           >
-            <strong>{note.title}</strong>
-            <span className="date">
+            <p className="date">
               {new Date().toLocaleDateString()}
-            </span>
+            </p>
+            <strong>{note.title}</strong>
             <button 
               className="deleteBtn" 
               onClick={(event) => {

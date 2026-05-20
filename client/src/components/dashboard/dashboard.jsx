@@ -99,6 +99,10 @@ export default function Dashboard({ user, onLogOutSuccess }) {
    * Handling the log-out, making a request to the backend to terminate the session.
    */
   const handleLogOut = async () => {
+    if(!window.confirm("Are you sure you want to log out?")) {
+      return
+    }
+
     try {
       const response = await fetch('/api/logout', {
         method: 'GET',
