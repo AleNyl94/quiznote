@@ -67,7 +67,7 @@ export default function Dashboard({ user, onLogOutSuccess }) {
       const url = isEdit ? `/api/note/${id}` : '/api/note'
       const method = isEdit ? 'PUT' : 'POST'
       
-      console.log(`Skickar ${method}-anrop till: ${url} (ID var: ${noteData.id})`)
+      console.log(`Skickar ${method}-anrop till: ${url} (ID var: ${id})`)
 
       const response = await fetch(url, {
         method: method,
@@ -101,7 +101,7 @@ export default function Dashboard({ user, onLogOutSuccess }) {
   const handleLogOut = async () => {
     try {
       const response = await fetch('/api/logout', {
-        method: 'POST',
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
       })

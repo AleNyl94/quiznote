@@ -6,18 +6,11 @@ import QuizCard from '../quizCard/quizCard.jsx'
  * The function for the note-creation view. 
  */
 export default function NoteView({ activeNote, saveNote }) {
-  const [ noteTitle, setNoteTitle ] = useState('')
-  const [noteBody, setNoteBody] = useState('')
+  const [noteTitle, setNoteTitle] = useState(activeNote?.title || '')
+  const [noteBody, setNoteBody] = useState(activeNote?.body || '')
   const [showQuiz, setShowQuiz] = useState(false)
   const [quizTasks, setQuizTasks] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    if (activeNote) {
-      setNoteTitle(activeNote.title || '')
-      setNoteBody(activeNote.body || '')
-    }
-  }, [activeNote])
 
   /**
    * Sends the quiz-request
@@ -64,11 +57,9 @@ export default function NoteView({ activeNote, saveNote }) {
     if (e && e.preventDefault) {
       e.preventDefault()
     }
-    const noteId = activeNote?._id || activeNote?.id || undefined
-
-    console.log('NoteView skickar till dashboard:', noteId, noteTitle, noteBody)
-
-    saveNote({ id: noteId, title: noteTitle, body: noteBody })
+    saveNote({ 
+      title: noteTitle, 
+      body: noteBody })
   }
 
   /**

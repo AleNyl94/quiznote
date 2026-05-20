@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './listView.css'
 import Dashboard from '../dashboard/dashboard.jsx'
 
-export default function ListView({ activeNote, setActiveNote, user, onOpenNote }) {
+export default function ListView({ user, onOpenNote, onDeleteNote }) {
   const [notes, setNotes] = useState([])
   const [ loading, setLoading ] = useState(true)
 
@@ -29,33 +29,6 @@ export default function ListView({ activeNote, setActiveNote, user, onOpenNote }
     return <p>Loading your notes...</p>
   }
 
-  /**
-   * Handles the function sending a request to the backend to delete the note.
-   *
-   * @param {*} noteId The id of the note.
-   * @returns Sends you back if answered.
-   */
-  const handleDeleteNote = async (noteId) => {
-    if(!window.confirm("Are you sure you want to delete this?")) {
-      return
-    }
-
-    try {
-      const response = await fetch(`/api/note/${noteId}`, {
-        method: 'DELETE',
-      })
-      if (response.ok) {
-        setNotes(prevNotes => prevNotes.filter(note => note._id !== noteId))
-      }
-      if (activeNote?._id == noteId) {
-        setActiveNote(null)
-        console.log('Note deleted!')
-      }
-      console.log('Deletion failed')
-    } catch (err) {
-      console.error('Could not delete note on server', err)
-    }
-  }
 
   return (
     <>
@@ -74,13 +47,13 @@ export default function ListView({ activeNote, setActiveNote, user, onOpenNote }
           >
             <strong>{note.title}</strong>
             <span className="date">
-              {new Date(note.createdAt).toLocaleDateString()}
+              {new Date().toLocaleDateString()}
             </span>
             <button 
               className="deleteBtn" 
               onClick={(event) => {
                 event.stopPropagation()
-                handleDeleteNote(note)
+                onDeleteNote(note)
               }}>
                 Delete
             </button>
