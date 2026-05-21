@@ -38,15 +38,15 @@ export default function LoginView({ toggleView, onLoginSuccess }) {
   }
   // The form for the login
   return (
-  <div class="loginForm">
+  <div className="loginForm">
     {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
     <form onSubmit={handleLogin}>
       <h1>QUIZNOTE</h1>
       <input type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
       <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-      <button class="loginBtn" type="submit">Log in</button>
+      <button className="loginBtn" type="submit">Log in</button>
       <p>No account?</p>
-      <button class="signUpBtn" onClick={toggleView}>Sign up</button>
+      <button className="signUpBtn" onClick={toggleView}>Sign up</button>
     </form>
   </div>
   )

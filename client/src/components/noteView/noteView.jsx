@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './noteView.css'
 import QuizCard from '../quizCard/quizCard.jsx'
 
@@ -17,21 +17,35 @@ export default function NoteView({ activeNote, saveNote }) {
    */
   const handleQuiz = async () => {
     try {
-      const noteId = activeNote?._id || activeNote?.id
-      const response = await fetch(`/api/note/generate-quiz/${noteId}`, {
+      const noteId = activeNote?._id
+
+      if (!noteId) {
+        alert("Save the note first!")
+        return
+      }
+
+      const response = await fetch(`/api/note/quiz/${noteId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: noteBody }),
-        withCredentials: 'true'
+        credentials: 'include'
       })
 
       const data = await response.json()
+      console.log('Det här skickade din backend tillbaka:', data)
 
-      const mappedTasks = data.task.map(item => {
-      const options = [item.trueAnswer, item.falseAnswer];
+      const tasksArray = data.task || data.tasks || data
+
+      if (!Array.isArray(data)) {
+        console.error("Hittade ingen array att mappa igenom! data var:", tasksArray)
+        return
+      }
+
+      const mappedTasks = data.map(item => {
       return {
         question: item.question,
-        shuffledOptions: options.sort(() => Math.random() - 0.5) 
+        correctAnswer: item.true,
+        shuffledOptions: [item.true, item.false].sort(() => Math.random() - 0.5)
       }
     })
 
@@ -42,6 +56,7 @@ export default function NoteView({ activeNote, saveNote }) {
       console.error('Could not generate quiz', err)
     }
   }
+
 
   /**
    * Toggles the quiz display, resets the score if closed.

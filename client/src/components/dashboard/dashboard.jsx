@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import NoteView from '../noteView/noteView.jsx'
 import ListView from '../listView/listView.jsx'
 import './dashboard.css'
@@ -13,6 +13,33 @@ export default function Dashboard({ user, onLogOutSuccess }) {
   const [ view, setView ] = useState('note')
   const [ activeNote, setActiveNote ] = useState(null)
   const [notes, setNotes] = useState([])
+  const [ loading, setLoading ] = useState(false)
+
+  /**
+   * Gets the users notes for the list.
+   */
+  useEffect(() => {
+      const fetchNotes = async () => {
+        try { 
+        const response = await fetch('/api/note/list', {
+          credentials: 'include'
+        })
+        if (response.ok) {
+          const data = await response.json()
+          setNotes(data)
+        }
+      } catch (err) {
+        console.error('Failed to fetch notes from server', err)
+      } finally {
+        setLoading(false)
+        }
+      }
+  
+      if (view === 'list') {
+        fetchNotes()
+      }
+    }, [view])
+
   /**
    * Toggles the list or note-view.
    * 
@@ -50,17 +77,20 @@ export default function Dashboard({ user, onLogOutSuccess }) {
       })
       if (response.ok) {
         setNotes(prevNotes => prevNotes.filter(note => note._id !== noteId))
-      }
-      if (activeNote?._id == noteId) {
-        setActiveNote(null)
         console.log('Note deleted!')
+      } else {
+        console.log('Deletion failed')
       }
-      console.log('Deletion failed')
     } catch (err) {
       console.error('Could not delete note on server', err)
     }
   }
 
+  /**
+   * Saves the note to the list of the notes belonging to the user.
+   *
+   * @param {*} formData The title, id and body of the note.
+   */
   const handleSaveNote = async (formData) => {
     try {
       const id = activeNote?._id
@@ -133,7 +163,7 @@ export default function Dashboard({ user, onLogOutSuccess }) {
       </nav>
       <main className="content-area">
         {view === 'note' && <NoteView activeNote={activeNote} saveNote={handleSaveNote} />}
-        {view === 'list' && <ListView notes={notes}  setNotes={setNotes} onOpenNote={handleOpenNote} user={user} onDeleteNote={handleDeleteNote} />}
+        {view === 'list' && <ListView  loading={loading} notes={notes}  setNotes={setNotes} onOpenNote={handleOpenNote} user={user} onDeleteNote={handleDeleteNote} />}
       </main>
     </div>
   )

@@ -1,29 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './listView.css'
 import Dashboard from '../dashboard/dashboard.jsx'
 
-export default function ListView({ user, onOpenNote, onDeleteNote }) {
-  const [notes, setNotes] = useState([])
-  const [ loading, setLoading ] = useState(true)
-
-  useEffect(() => {
-    const fetchNotes = async () => {
-      try { 
-        const response = await fetch('/api/note/list', {
-          credentials: 'include'
-        })
-      if (response.ok) {
-        const data = await response.json()
-        setNotes(data)
-      }
-      } catch (err) {
-        console.log('Could not fetch notes', err)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchNotes()
-  }, [])
+export default function ListView({ notes, user, onOpenNote, onDeleteNote, loading }) {
 
   if (loading) {
     return <p>Loading your notes...</p>

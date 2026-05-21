@@ -1,14 +1,52 @@
-.modal {
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); 
+  z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   z-index: 1000;
+  gap: 30px;
   top: 0;
   left: 0;
-  height: 50dvh;
+  min-height: 50dvh;
   width: 50dvw;
-  border-radius: 22px;
+  border-radius: 15px;
+  padding: 40px;
   background-color: var(--page-color)
+}
+
+.card-content strong {
+  margin-bottom: 25px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--secondary-color);
+  padding: 5px 10px;
+}
+
+.closeBtn:hover {
+  color: #f10e0e;
 }
 
 .options {
@@ -21,13 +59,13 @@
   background-color: var(--secondary-color);
   color: var(--page-color);
   transition: background-color 0.3s ease;
-  padding: 10px;
+  padding: 10px 20px;
   border: none;
   cursor: pointer;
 }
 
 .optionBtn:hover:not(:disabled) {
-  transform: translateY(3px);
+  transform: translateY(-3px);
   box-shadow: var(--shadow);
 }
 
@@ -37,7 +75,7 @@
 }
 
 .optionBtn.wrong {
-  background-color: #f10e0e !important;
+  background-color: #f10e0e;
   color: var(--page-color);
 }
 
@@ -51,8 +89,15 @@
   background-color: var(--secondary-color);
   color: var(--page-color);
   transition: background-color 0.3s ease;
+  margin-top: 15px;
   padding: 10px;
   border: none;
+  cursor: pointer;
+}
+
+.nextBtn:hover {
+  border-radius: 30px;
+  background-color: #a1a3b6; 
 }
 
 .results {
@@ -66,4 +111,11 @@
   width: 50dvw;
   border-radius: 22px;
   background-color: var(--page-color)
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
