@@ -32,7 +32,6 @@ export default function NoteView({ activeNote, saveNote }) {
       })
 
       const data = await response.json()
-      console.log('Det här skickade din backend tillbaka:', data)
 
       const tasksArray = data.task || data.tasks || data
 
