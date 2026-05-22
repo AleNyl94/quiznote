@@ -84,20 +84,12 @@ describe('Note isolated CRUD Test', () => {
   })
 
   it('Should update the note', async () => {
-<<<<<<< HEAD
-    const noteFound = await Note.findById(savedNoteId)
-
-    const req = {
-      params: { id: savedNoteId },
-      body: { title: 'Updated Title' } 
-=======
     const req = { 
       params: { id: savedNoteId },
       body: { 
         title: 'Updated Title',
         body: 'Uppdaterad lång text för att fortfarande klara valideringsreglerna.'
       }
->>>>>>> 595da33235526ef45d01ac85bb551bc34797409f
     }
     const res = {
       status: jest.fn().mockReturnThis(),
