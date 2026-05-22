@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import './noteView.css'
 import QuizCard from '../quizCard/quizCard.jsx'
 
@@ -6,39 +6,45 @@ import QuizCard from '../quizCard/quizCard.jsx'
  * The function for the note-creation view. 
  */
 export default function NoteView({ activeNote, saveNote }) {
-  const [ noteTitle, setNoteTitle ] = useState('')
-  const [noteBody, setNoteBody] = useState('')
+  const [noteTitle, setNoteTitle] = useState(activeNote?.title || '')
+  const [noteBody, setNoteBody] = useState(activeNote?.body || '')
   const [showQuiz, setShowQuiz] = useState(false)
   const [quizTasks, setQuizTasks] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
-
-  useEffect(() => {
-    if (activeNote) {
-      setNoteTitle(activeNote.title || '')
-      setNoteBody(activeNote.body || '')
-    }
-  }, [activeNote])
 
   /**
    * Sends the quiz-request
    */
   const handleQuiz = async () => {
     try {
-      const noteId = activeNote?._id || activeNote?.id
-      const response = await fetch(`/api/note/generate-quiz/${noteId}`, {
+      const noteId = activeNote?._id
+
+      if (!noteId) {
+        alert("Save the note first!")
+        return
+      }
+
+      const response = await fetch(`/api/note/quiz/${noteId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: noteBody }),
-        withCredentials: 'true'
+        credentials: 'include'
       })
 
       const data = await response.json()
 
-      const mappedTasks = data.task.map(item => {
-      const options = [item.trueAnswer, item.falseAnswer];
+      const tasksArray = data.task || data.tasks || data
+
+      if (!Array.isArray(data)) {
+        console.error("Hittade ingen array att mappa igenom! data var:", tasksArray)
+        return
+      }
+
+      const mappedTasks = data.map(item => {
       return {
         question: item.question,
-        shuffledOptions: options.sort(() => Math.random() - 0.5) 
+        correctAnswer: item.true,
+        shuffledOptions: [item.true, item.false].sort(() => Math.random() - 0.5)
       }
     })
 
@@ -49,6 +55,7 @@ export default function NoteView({ activeNote, saveNote }) {
       console.error('Could not generate quiz', err)
     }
   }
+
 
   /**
    * Toggles the quiz display, resets the score if closed.
@@ -64,11 +71,9 @@ export default function NoteView({ activeNote, saveNote }) {
     if (e && e.preventDefault) {
       e.preventDefault()
     }
-    const noteId = activeNote?._id || activeNote?.id || undefined
-
-    console.log('NoteView skickar till dashboard:', noteId, noteTitle, noteBody)
-
-    saveNote({ id: noteId, title: noteTitle, body: noteBody })
+    saveNote({ 
+      title: noteTitle, 
+      body: noteBody })
   }
 
   /**

@@ -8,6 +8,7 @@ import 'dotenv/config'
 export const aiService = {
   generateQuiz: async (noteBody) => {
   try {
+    console.log('Sending prompt to AI-service')
     const response = await fetch(process.env.API_URL, {
       method: 'POST',
       headers: {
@@ -25,15 +26,16 @@ export const aiService = {
       // Then adress as a user that gives the text from users notes, which is the base of the quiz 
       {
         "role": "user",
-        "content": `"Skapa frågor baserat på denna text:", ${noteBody}`
+        "content": `Skapa frågor baserat på denna text:, ${noteBody}`
         }],
-      "response-format": { "type": "json_object" },
+      "response_format": { "type": "json_object" },
       "temperature": 0.5 
     })
   })
 
   // Gets and reformats the answer so it can be unpacked and sent to the UI.
   const rawData = await response.json()
+
   const content = rawData.choices[0].message.content
   const quizData = JSON.parse(content)
 
@@ -46,7 +48,7 @@ export const aiService = {
     }
   })
 
-  console.log('Sending prompt to AI-model')
+  console.log('Quiz successfully generated and formatted!')
   return formattedQuiz
   } catch (error) {
     console.error("Error in contacting the ai-service", error)

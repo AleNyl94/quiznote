@@ -17,8 +17,8 @@ export const noteController = {
       const { title, body } = req.body
 
       const newNote = new Note({
-        title: req.body.title,
-        body: req.body.body,
+        title: title,
+        body: body,
         owner: req.session.user.id
       })
 
@@ -73,9 +73,12 @@ export const noteController = {
    */
   delete: async (req, res) => {
     try {
-      if (!res.locals.note) return res.status(404).json({ message: "Note not found" })
+      const { id } = req.params
+      const deletedNote = await Note.findByIdAndDelete(id)
 
-      await res.locals.note.deleteOne()
+      if (!deletedNote) {
+        return res.status(404).json({ message: 'Note not found' })
+      }
       res.status(204).end()
     } catch (err) {
       res.status(500).json({ error: err.message })
@@ -89,9 +92,9 @@ export const noteController = {
    */     
   quiz: async (req, res) => {
     try {
-    const { noteId } = req.params
+    const { id } = req.params
 
-    const note = await Note.findById(noteId)
+    const note = await Note.findById(id)
     if (!note) {
       return res.status(404).json('Note not found')
     }

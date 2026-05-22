@@ -47,39 +47,43 @@ export default function QuizCard({ data, currentIndex, totalQuestions, nextQuest
    * The quiz card-modal, displaying the question and alternatives.
    */
   return (
-    <div className="modal">
-      <div className="card-content">
+    <div className="modalOverlay">
+      <div className="modal">
         <button className="closeBtn" onClick={onClose}>X</button>
+        <div className="card-content">
 
-        {!showResults ? (
-        <>
-        <h2>QUIZ TIME</h2>
-        <p className="question-text">{data.question}</p>
-        <div className="options">
-          {data.shuffledOptions.map((option, index) => (
-            <button
-              key={index}
-              disabled={hasAnswered}
-              className={`optionBtn ${hasAnswered && option === data.trueAnswer ? 'correct' : ''} ${selectedAnswer === option && option !== data.trueAnswer ? 'wrong' : ''}`}
-              onClick={() => handleAnswer(option)}
-            >
-              {option}
+          {!showResults ? (
+          <>
+          <h2>QUIZ TIME</h2>
+          <strong className="question-text">{data.question}</strong>
+          <div className="options">
+            {data.shuffledOptions.map((option, index) => (
+              <button
+                key={index}
+                disabled={hasAnswered}
+                className={`optionBtn ${
+                  hasAnswered && option === data.correctAnswer ? 'correct' : ''
+                }`}
+                onClick={() => handleAnswer(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+          {hasAnswered && (
+            <button className="nextBtn" onClick={handleNext}>
+              {currentIndex < totalQuestions - 1 ? 'Next Question' : 'Show Result'}
             </button>
-          ))}
+          )}
+          </>
+          ) : (
+          <div className="results">
+            <h2>Quiz Finished!</h2>
+            <p>You got <strong>{score}</strong> out of {totalQuestions} correct.</p>
+            <button className="nextBtn" onClick={onClose}>Close</button>
+          </div>  
+          )}
         </div>
-        {hasAnswered && (
-          <button className="nextBtn" onClick={handleNext}>
-            {currentIndex < totalQuestions - 1 ? 'Next Question' : 'Show Result'}
-          </button>
-        )}
-        </>
-        ) : (
-        <div className="results">
-          <h2>Quiz Finished!</h2>
-          <p>You got <strong>{score}</strong> out of {totalQuestions} correct.</p>
-          <button className="nextBtn" onClick={onClose}>Close</button>
-        </div>  
-        )}
       </div>
     </div>
   )
