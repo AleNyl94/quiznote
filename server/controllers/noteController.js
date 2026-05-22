@@ -1,7 +1,6 @@
 import { Note } from '../models/noteModel.js'
 import { User } from '../models/userModel.js'
 import { aiService } from '../utils/aiService.js'
-import mongoose from 'mongoose'
 
 
 export const noteController = {
@@ -38,7 +37,7 @@ export const noteController = {
    */
   get: async (req, res) => {
     try {
-      const notes = await Note.find({ owner: new mongoose.Types.ObjectId(req.session.user.id) }).sort({ createdAt: -1 })
+      const notes = await Note.find({ owner: req.session.user.id }).populate('owner', 'email')
       res.json(notes)
     } catch (err) {
       res.status(500).json({ error: err.message })
@@ -54,12 +53,9 @@ export const noteController = {
   edit: async (req, res) => {
     try {
       const { id } = req.params
-      const note = await note.findById(id)
-
-      if (!note) {
-        return res.status(404).json({ message: "Note not found" })
-      }
-
+      const note = await Note.findById(id)
+      if (!note) return res.status(404).json({ message: "Note is not found"})  
+      
       Object.assign(note, req.body)
       await note.save()
       res.status(200).json(note)
