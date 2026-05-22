@@ -34,14 +34,27 @@ describe('Note isolated CRUD Test', () => {
     const req = { 
       body: {
         title: 'Test Note', 
-        body: 'Content Ipsum Dolor', 
+        body: 'Content Ipsum Dolor. Det här är en tillräckligt lång text för att klara kontrollen inuti controllern som kräver minst hundra tecken för ett quiz.', 
         owner: mockUserID 
+      },
+      params: {},
+      session: {
+        user: {
+          id: mockUserID.toString(),
+          email: 'test@test.com'
+        }
       }
     }
 
     const res = {
       status: jest.fn().mockReturnThis(),
-      json: jest.fn((data) => { savedNoteId = data._id })
+      json: jest.fn().mockImplementation((data) => {
+        if (data && data._id) {
+          savedNoteId = data._id
+        }
+        return res
+      }),
+      sendStatus: jest.fn().mockReturnThis()
     }
 
     await noteController.create(req, res)
@@ -53,15 +66,14 @@ describe('Note isolated CRUD Test', () => {
 
   it('Getting the users notes', async () => {
     const req = {
+      session: { user: { id: mockUserID.toString() } },
       user: { _id: mockUserID }
     }
     const res = {
-      locals: {
-        user: { _id: mockUserID }
-      },
       status: jest.fn().mockReturnThis(),
       json: jest.fn()
     }
+
     await noteController.get(req, res)
 
     expect(res.json).toHaveBeenCalledWith(
@@ -74,8 +86,11 @@ describe('Note isolated CRUD Test', () => {
   it('Should update the note', async () => {
     const req = { 
       params: { id: savedNoteId },
-      body: { title: 'Updated Title' }
-     }
+      body: { 
+        title: 'Updated Title',
+        body: 'Uppdaterad lång text för att fortfarande klara valideringsreglerna.'
+      }
+    }
     const res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn()
@@ -86,11 +101,12 @@ describe('Note isolated CRUD Test', () => {
   })
 
   it('Should delete a note', async () => {
-    const noteToDelete = await Note.findById(savedNoteId)
-
-    const req = {}
+    const req = { 
+      params: { 
+        id: savedNoteId 
+      }
+    }
     const res = {
-      locals: { note: noteToDelete },
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
       end: jest.fn()
