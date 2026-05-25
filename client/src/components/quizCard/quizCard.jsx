@@ -58,11 +58,13 @@ export default function QuizCard({ data, currentIndex, totalQuestions, nextQuest
           <strong className="question-text">{data.question}</strong>
           <div className="options">
             {data.shuffledOptions.map((option, index) => (
+
               <button
                 key={index}
                 disabled={hasAnswered}
                 className={`optionBtn ${
                   hasAnswered && option === data.correctAnswer ? 'correct' : ''
+                } ${ hasAnswered && option === selectedAnswer && option !== data.trueAnswer ? 'wrong' : ''
                 }`}
                 onClick={() => handleAnswer(option)}
               >

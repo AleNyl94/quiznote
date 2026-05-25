@@ -2,7 +2,8 @@
 :root {
   --primary-color: #f8f8f8;
   --secondary-color: #B8BAD2;
-  --accent-color: #E9FF6D;
+  --accent-color: #d5f03b;
+  --accenthover-color: #899c1d;
   --text-color: #000000;
   --page-color: #FFFFFF;
   --border-radius: 10px;

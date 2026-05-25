@@ -73,5 +73,5 @@ body {
 
 .quizBtn:hover {
   border-radius: 30px;
-  background-color: #d0e74a;  
+  background-color: var(--accenthover-color);  
 }
