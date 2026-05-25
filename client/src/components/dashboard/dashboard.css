@@ -33,11 +33,11 @@ html, body {
   text-decoration: none;
   color: var(--page-color);
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .dashBtn:hover {
-  color: #a8a8a8;
+  color: #555555;
 }
 
 .logOutBtn {
@@ -48,7 +48,7 @@ html, body {
   text-decoration: none;
   color: var(--page-color);
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .logOutBtn:hover {
