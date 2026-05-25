@@ -18,8 +18,7 @@ test-job:
   stage: test
   script:
     - cd server
-    - npm run eslint
-    - npm test
+    - npm run lint
     - npm test
     - cd ..
     - cd client
