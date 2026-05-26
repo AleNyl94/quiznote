@@ -15,7 +15,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   z-index: 1000;
   gap: 30px;
@@ -102,25 +101,66 @@
 
 .results {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   top: 0;
   left: 0;
-  height: 50dvh;
-  width: 50dvw;
   border-radius: 22px;
-  background-color: var(--page-color)
+  background-color: var(--page-color);
 }
 
 .card-content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  top: 10px;
   align-items: center;
+  gap: 2rem;
 }
 
 .optionBtn:disabled.correct,
 .optionBtn:disabled.wrong {
   opacity: 1;
+}
+
+.totalquestions {
+  font-size: 2rem;
+  color: var(--text-color);
+  font-weight: 500;
+}
+
+.score {
+  font-size: 2rem;
+  color: var(--accent-color);
+}
+
+.results h2 {
+ font-size: 3.6rem;
+ font-weight: 700;
+ margin-bottom: 0.4rem;
+}
+
+.question-text {
+  margin-bottom: 2rem;
+}
+
+.scoreboard {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+}
+
+.snedstreck {
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.title {
+  top: 0;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
 }

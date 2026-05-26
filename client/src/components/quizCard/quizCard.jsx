@@ -1,6 +1,11 @@
 import { useState } from 'react'
 import './quizCard.css'
 
+/**
+ * Component for the quiz-card.
+ * @param {*} props The porperties sent from the component.
+ * @returns The user to the noteview.
+ */
 export default function QuizCard({ data, currentIndex, totalQuestions, nextQuestion, onClose }) {
 
   const [ selectedAnswer, setSelectedAnswer ] = useState(null)
@@ -21,7 +26,7 @@ export default function QuizCard({ data, currentIndex, totalQuestions, nextQuest
     setSelectedAnswer(option)
     setHasAnswered(true)
 
-    if (option === data.trueAnswer) {
+    if (option === data.correctAnswer) {
       setScore(prev => prev + 1)
     }
   }
@@ -54,7 +59,7 @@ export default function QuizCard({ data, currentIndex, totalQuestions, nextQuest
 
           {!showResults ? (
           <>
-          <h2>QUIZ TIME</h2>
+          <h2 className="title">QUIZ TIME</h2>
           <strong className="question-text">{data.question}</strong>
           <div className="options">
             {data.shuffledOptions.map((option, index) => (
@@ -64,7 +69,7 @@ export default function QuizCard({ data, currentIndex, totalQuestions, nextQuest
                 disabled={hasAnswered}
                 className={`optionBtn ${
                   hasAnswered && option === data.correctAnswer ? 'correct' : ''
-                } ${ hasAnswered && option === selectedAnswer && option !== data.trueAnswer ? 'wrong' : ''
+                } ${ hasAnswered && option === selectedAnswer && option !== data.correctAnswer ? 'wrong' : ''
                 }`}
                 onClick={() => handleAnswer(option)}
               >
@@ -81,7 +86,10 @@ export default function QuizCard({ data, currentIndex, totalQuestions, nextQuest
           ) : (
           <div className="results">
             <h2>Quiz Finished!</h2>
-            <p>You got <strong>{score}</strong> out of {totalQuestions} correct.</p>
+            <h3>You got: </h3>
+              <div className="scoreboard">
+                <h3 className="score">{score}</h3><h3 className="snedstreck">/</h3><h3 className="totalquestions">{totalQuestions}</h3>
+              </div>
             <button className="nextBtn" onClick={onClose}>Close</button>
           </div>  
           )}
