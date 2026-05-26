@@ -7,7 +7,14 @@ import { aiService } from '../utils/aiService.js'
 jest.spyOn(global, 'fetch')
 
 describe('ai-service', () => {
-  it('Should format the JSON-answer correctly', async () => {
+  /**
+   * Test how the aiService structures the JSON-code that is sent from a mock response in this test-case.
+   */
+  it('Should format the JSON-answer correctly', 
+    /**
+     * Test execution function.
+     */
+    async () => {
     const mockAiResponse = {
         choices: [
           { 
@@ -26,6 +33,11 @@ describe('ai-service', () => {
     }
     global.fetch.mockResolvedValue({
       ok: true,
+      /**
+       * The mock ai-response sent.
+       * 
+       * @returns {Promise<object>} A promise that resolves to the mock AI response data.
+       */
       json: async () => mockAiResponse
     })
 

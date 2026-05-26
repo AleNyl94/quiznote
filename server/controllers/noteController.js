@@ -10,7 +10,6 @@ export const noteController = {
    *
    * @param {*} req The request object.
    * @param {*} res The response object.
-   * @param {*} next The next path.
    */
   create: async (req, res) => {
     try {

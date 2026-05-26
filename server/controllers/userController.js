@@ -2,6 +2,13 @@ import { User } from '../models/userModel.js'
 
 export const userController = {
 
+  /**
+   * Signup-function for the user.
+   *
+   * @param {*} req The request object, the user's credentials.
+   * @param {*} res The response from the database.
+   * @returns 
+   */
   signup: async (req, res) => {
     try {
       console.log("Request Body:", req.body)
@@ -23,6 +30,13 @@ export const userController = {
     }
   },
 
+  /**
+   * The function for logging in.
+   *
+   * @param {*} req The login request with email and password.
+   * @param {*} res The response from the database, if logged in or wrong credentials.
+   * @returns 
+   */
   login: async (req, res) => {
     try {
       const { email, password } = req.body
@@ -46,6 +60,12 @@ export const userController = {
     }
   },
 
+  /**
+   * Logging out the user and terminating the session.
+   * 
+   * @param {*} req The request for logging out.
+   * @param {*} res The response from the database if it passed you or not.
+   */
   logout: async (req, res) => {
     req.session.destroy(err => {
       if (err) {

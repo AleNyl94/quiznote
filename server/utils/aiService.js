@@ -6,6 +6,12 @@ import 'dotenv/config'
  * 
  */
 export const aiService = {
+  /**
+   * Makes a quiz based on a prompt including the users
+   * note, sends it to the AI-endpoint and then handles the JSON-answer.
+   * 
+   * @param {*} noteBody The text content of the note. 
+   */
   generateQuiz: async (noteBody) => {
   try {
     console.log('Sending prompt to AI-service')
