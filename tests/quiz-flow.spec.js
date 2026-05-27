@@ -12,9 +12,12 @@ test.describe('System-test for quiz-generation flow', () => {
     await expect(note).toBeVisible()
   })
 
-  test('Should create, save and find a note, then complete an AI quiz', async ({ page }) => {
+  test('Should create, save and find a note, then complete an AI quiz, update and delete it', async ({ page }) => {
     await page.fill('.noteTitleInput', 'Romersk Betong')
-    await page.fill('.noteBodyArea', 'Vulkanisk aska är den hemliga ingrediensen i romersk betong.')
+    await page.fill('.noteBodyArea', 'Vulkanisk aska är den hemliga ingrediensen i romersk betong, även kallat opus caementicium. ' +
+      'Detta unika material gjorde att betongen kunde härda under vatten, vilket var perfekt för hamnar. ' +
+      'Tack vare den vulkaniska askan från Pozzuoli har romerska strukturer som Pantheon överlevt i över tvåtusen år.'
+    )
 
     await page.click('.saveBtn')
     await page.getByRole('button', { name: 'My notes' }).click()
@@ -24,21 +27,41 @@ test.describe('System-test for quiz-generation flow', () => {
 
     await page.click('.quizBtn')
     const modal = page.locator('.modalOverlay')
-    await expect(modal).toBeVisible()
+    await expect(modal).toBeVisible({ timeout: 3000 })
     await expect(page.locator('.title')).toHaveText('QUIZ TIME')
     
-    const optionButton = page.locator('.optionBtn').first();
-    await expect(optionButton).toBeVisible();
-    await optionButton.click();
-
     const nextBtn = page.locator('.nextBtn')
-    await expect(nextBtn).toBeVisible()
-    await nextBtn.click()
+    const resultsHeadline = page.locator('.results h2')
 
-    await expect(page.locator('.results h2')).toHaveText('Quiz Finished!')
+    while (!await resultsHeadline.isVisible()) {
+      const optionButton = page.locator('.optionBtn').first()
+      if (await optionButton.isVisible()) {
+        await optionButton.click()
+      }
+
+      if (await nextBtn.isVisible()) {
+        await nextBtn.click()
+      }
+
+      await page.waitForTimeout(1000) 
+    }
+    await expect(resultsHeadline).toHaveText('Quiz Finished!')
     await expect(page.locator('.scoreboard')).toBeVisible()
 
-    await page.click('button:has-text("Close")')
+    await page.click('button:has-text("X")')
     await expect(modal).not.toBeVisible()
+
+    await page.fill('.noteTitleInput', 'Ny uppdaterad titel')
+    await page.click('.saveBtn')
+    await page.getByRole('button', { name: 'My notes' }).click()
+    const newNoteInList = page.locator('.list .note-item', { hasText: 'Ny uppdaterad titel' })
+    await expect(newNoteInList).toBeVisible()
+
+    page.once('dialog', async dialog => {
+      console.log(`Handles dialogue: ${dialog.message()}`)
+      await dialog.accept()
+    })
+    await newNoteInList.locator('.deleteBtn').click()
+    await expect(newNoteInList).not.toBeVisible()
   })
 })
