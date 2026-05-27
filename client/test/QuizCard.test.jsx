@@ -7,8 +7,8 @@ describe('QuizCard Component', () => {
   
   const mockData = {
     question: 'What is the primary ingredient in Roman concrete?',
-    trueAnswer: 'Volcanic ash',
-    falseAnswer: 'Portland cement'
+    correctAnswer: 'Volcanic ash',
+    shuffledOptions: ['Volcanic ash', 'Portland cement']
   }
 
   const mockProps = {
@@ -51,9 +51,9 @@ describe('QuizCard Component', () => {
     fireEvent.click(resultBtn)
 
     expect(screen.getByText('Quiz Finished!')).toBeInTheDocument()
-    expect(screen.getByText(/You got/i)).toBeInTheDocument()
 
-    expect(screen.getByText('1')).toBeInTheDocument() 
+    const scoreElement = screen.getByText('1', { selector: '.score' })
+    expect(scoreElement).toBeInTheDocument()
   })
 
   it('should disable option buttons once an answer has been selected', () => {

@@ -4,6 +4,8 @@ import { vi, describe, it, expect } from 'vitest'
 import Dashboard from '../src/components/dashboard/dashboard.jsx'
 import { BrowserRouter } from 'react-router-dom'
 
+vi.stubGlobal('confirm', () => true)
+
 describe('Dashboard Component', () => {
   it('Should render the dashboard', () => {
     render(
@@ -22,15 +24,17 @@ describe('Dashboard Component', () => {
     })
 
     render(
-      <Dashboard onLogOutSuccess={mockOnLogOutSuccess}>
-        <div>Some children</div>
-      </Dashboard>
+      <BrowserRouter>
+        <Dashboard onLogOutSuccess={mockOnLogOutSuccess}>
+          <div>Some children</div>
+        </Dashboard>
+      </BrowserRouter>
     )
 
     const logoutBtn = screen.getByRole('button', { name: /log out/i })
     fireEvent.click(logoutBtn)
 
-    expect(globalThis.fetch).toHaveBeenCalledWith('api/logout', expect.anything())
+    expect(globalThis.fetch).toHaveBeenCalledWith('/api/logout', expect.anything())
     
     await vi.waitFor(() => {
       expect(mockOnLogOutSuccess).toHaveBeenCalledWith(null)

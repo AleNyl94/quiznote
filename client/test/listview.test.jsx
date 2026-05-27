@@ -57,7 +57,7 @@ describe('ListView Component', () => {
       json: () => Promise.resolve([]),
     })
 
-    render(<ListView notes={[]} />)
+    render(<ListView notes={[]} user={{ username: 'TestUser' }} />)
 
     const emptyMessage = await screen.findByText(/No notes yet, create some to see them here!/i)
     expect(emptyMessage).toBeInTheDocument()
