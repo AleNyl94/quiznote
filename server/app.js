@@ -11,6 +11,12 @@ import cors from 'cors'
 
 const app = express()
 
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://cu1066.camp.lnu.se'],
+  credentials: true
+}))
+
+
 app.use(express.json())
 app.use(session({
     name: 'sessionID',
@@ -22,11 +28,6 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24,
         sameSite: 'lax'
     }
-}))
-
-app.use(cors({
-  origin: 'http://cu1066.camp.lnu.se',
-  credentials: true
 }))
 
 app.use('/api', mainRouter)

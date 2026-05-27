@@ -16,20 +16,25 @@ const toggleView = () => {
 }
 
 useEffect(() => {
-  fetch('api/me', { credentials: 'include'})
-    .then(res => {
-      if(res.ok) return res.json()
-      throw new Error('Not logged in')
-    })
-    .then(userData => {
-      setUser(userData)
-      setCurrentView('dashboard')
-    })
-    .catch(() => {
+  const checkSession = async () => {
+    try {
+      const response = await fetch('/api/me', { credentials: 'include'})
+      
+      if(response.ok) {
+        const userData = response.json()
+        setUser(userData)
+      } else {
+        setUser(null)
+        setCurrentView('login')
+      }
+    } catch (err) {
+      console.error('No session found', err)
       setUser(null)
       setCurrentView('login')
-    })
-  }, [])
+    }
+  }
+  checkSession()
+}, [])
 
 const handleLoginSuccess = (userData) => {
   setUser(userData)

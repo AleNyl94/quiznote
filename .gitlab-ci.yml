@@ -29,6 +29,16 @@ test-job:
   dependencies:
     - build-job
 
+system-test:
+  stage: test
+  script:
+    - npm install
+    - cd server && npm start &
+    - cd ..
+    - cd client && npm run dev &
+    - sleep 5
+    - npx playwright test
+
 deploy-job:
   stage: deploy
   script:

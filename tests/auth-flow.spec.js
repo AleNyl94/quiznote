@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Systemtest for logging in', () => {
-  test('User should se the loginform at the start', async ({page})) => {
+test.describe('Systemtest for signing up and logging in', () => {
+  test('User should se the loginform at the start', async ({page}) => {
     await page.goto('http://localhost:5173')
 
+    
     await expect(page.locator('h1')).toHaveText('QUIZNOTE')
 
     await page.locator('input[type="email"]').fill('test@mail.com')
@@ -15,5 +16,5 @@ test.describe('Systemtest for logging in', () => {
 
     const errorMessage = page.locator('.loginForm p')
     await expect(errorMessage).not.toBeVisible()
-  }
+  })
 })
