@@ -6,6 +6,14 @@
 import { useState } from 'react'
 import './loginView.css'
 
+/**
+ * The login-form for the app.
+ * 
+ * @param {object} props The component properties.
+ * @param {Function} props.toggleView Changes between the login- and signup-forms.
+ * @param {Function} props.onLoginSuccess Handles when the user is verified and shows the application.
+ * @returns {JSX.Element} View for logging in with email and password, if no account there is a option to sign up.
+ */
 export default function LoginView({ toggleView, onLoginSuccess }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

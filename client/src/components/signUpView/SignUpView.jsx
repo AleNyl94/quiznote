@@ -4,6 +4,14 @@
 import { useState } from 'react'
 import './signUpView.css'
 
+/**
+ * The signup-form.
+ * 
+ * @param {object} props The component properties.
+ * @param {Function} props.onSignUpSuccess Handles the successful signup after request.
+ * @param {Function} props.toggleView Toggles between the login and signup-form.
+ * @returns {JSX.Element} The form for signing up a user.
+ */
 export default function SignUpView({ onSignUpSuccess, toggleView }) {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -14,8 +22,9 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
 
   /**
    * Handles the sign up, connecting the submit-button to the
-   * signup-request, 
-   * @param {*} e 
+   * signup-request.
+   *
+   * @param {object} [e] - Click event for requesting the sign up to the database. 
    * @returns When signup is successful it returns you to the login-form again.
    */
   const handleSignup = async (e) => {
@@ -48,6 +57,8 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
 
   /**
    * The form for signing up an account.  
+   *
+   * @param {object} [e] - Click event for triggering the function for signing up.
    */ 
   return (
   <div className="signupForm">

@@ -1,6 +1,17 @@
 import './listView.css'
 import Dashboard from '../dashboard/dashboard.jsx'
 
+/**
+ * The list of the users notes that is saved.
+ * 
+ * @param {object} props The component properties.
+ * @param {object} props.notes The notes data, title and body.
+ * @param {object} props.user The logged-in user.
+ * @param {Function} props.onOpenNote Function that opens a brand new note. 
+ * @param {Function} props.onDeleteNote Deletes a chosen note.
+ * @param {Function} props.loading Shows while processing the get-request.
+ * @returns {JSX.Element} A view presenting the notes that the user saved, enabling to view, edit and delete them.
+ */
 export default function ListView({ notes, user, onOpenNote, onDeleteNote, loading }) {
 
   if (loading) {

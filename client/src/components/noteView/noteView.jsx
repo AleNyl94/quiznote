@@ -3,7 +3,12 @@ import './noteView.css'
 import QuizCard from '../quizCard/quizCard.jsx'
 
 /**
- * The function for the note-creation view. 
+ * The function for the note-creation view.
+ *
+ * @param {object} props The component properties.
+ * @param {object} props.activeNote The current note.
+ * @param {Function} props.saveNote Callback function to save the current note data.
+ * @returns {JSX.Element} View for the note creation, where a user can name, create, quiz and save a note.
  */
 export default function NoteView({ activeNote, saveNote }) {
   const [noteTitle, setNoteTitle] = useState(activeNote?.title || '')
@@ -66,6 +71,7 @@ export default function NoteView({ activeNote, saveNote }) {
 
   /**
    * Function for saving the note
+   * @param {object} [e] - Click for the button saving the note via request. 
    */
   const handleSave = (e) => {
     if (e && e.preventDefault) {
@@ -86,6 +92,7 @@ export default function NoteView({ activeNote, saveNote }) {
   /**
    * The view for the note, allowing the user to fill in the text-area with notes,
    * saving it or making a quiz.
+   * @param {object} [e] - Optional click event.
    */
   return (
     <div className="content">

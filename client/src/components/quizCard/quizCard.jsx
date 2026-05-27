@@ -3,8 +3,14 @@ import './quizCard.css'
 
 /**
  * Component for the quiz-card.
- * @param {*} props The porperties sent from the component.
- * @returns The user to the noteview.
+ *
+ * @param {object} props The porperties sent from the component.
+ * @param {object} props.data The question data including question and answers.
+ * @param {number} props.currentIndex The current questions number in the list.
+ * @param {number} props.totalQuestions The number of total questions.
+ * @param {Function} props.nextQuestion Sends the next question to the UI.
+ * @param {Function} props.onClose Closes the UI-modal.
+ * @returns {JSX.Element} The rendered quiz card modal overlay or null if no data is present.
  */
 export default function QuizCard({ data, currentIndex, totalQuestions, nextQuestion, onClose }) {
 

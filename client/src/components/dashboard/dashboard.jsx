@@ -5,9 +5,11 @@ import './dashboard.css'
 
 /**
  * The dashboard that lets the user navigate in the app.
- * 
- * @returns The dashboard-component with a content-area beneath it, showing either
- * the note or list-view.
+ *
+ * @param {object} props The component properties.
+ * @param {object} props.user The logged in user's data object.
+ * @param {Function} props.onLogOutSuccess Triggered on successful logout.
+ * @returns {JSX.Element} The dashboard component layout with a dynamic content area.
  */
 export default function Dashboard({ user, onLogOutSuccess }) {
   const [ view, setView ] = useState('note')

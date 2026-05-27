@@ -3,6 +3,9 @@ import LoginView from './components/loginView/loginView.jsx'
 import SignUpView from './components/signUpView/SignUpView.jsx'
 import Dashboard from './components/dashboard/dashboard.jsx'
 
+/**
+ *
+ */
 export function App() {
 
 const [currentView, setCurrentView] = useState('login')
