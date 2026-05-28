@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './noteView.css'
+import Notification from '../notification/notification.jsx'
 import QuizCard from '../quizCard/quizCard.jsx'
 
 /**
@@ -11,6 +12,7 @@ import QuizCard from '../quizCard/quizCard.jsx'
  * @returns {JSX.Element} View for the note creation, where a user can name, create, quiz and save a note.
  */
 export default function NoteView({ activeNote, saveNote }) {
+  const [errorMessage, setErrorMessage] = useState('')
   const [noteTitle, setNoteTitle] = useState(activeNote?.title || '')
   const [noteBody, setNoteBody] = useState(activeNote?.body || '')
   const [showQuiz, setShowQuiz] = useState(false)
@@ -24,8 +26,15 @@ export default function NoteView({ activeNote, saveNote }) {
     try {
       const noteId = activeNote?._id
 
+      if (noteBody.trim().length < 100) {
+        setErrorMessage('You need at least 100 characters of text to generate a quiz.')
+        setTimeout(() => setErrorMessage(''), 4000)
+        return
+      }
+
       if (!noteId) {
-        alert("Save the note first!")
+        setErrorMessage('Save the note first!')
+        setTimeout(() => setErrorMessage(''), 3000)
         return
       }
 
@@ -96,6 +105,7 @@ export default function NoteView({ activeNote, saveNote }) {
    */
   return (
     <div className="content">
+      <Notification message={errorMessage} type="error" />
         <div className="noteTop">
           <input type="text" 
             value={noteTitle} 

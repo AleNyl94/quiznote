@@ -4,6 +4,7 @@
  * there is a possibility to sign up.
  */ 
 import { useState } from 'react'
+import Notification from '../notification/notification.jsx'
 import './loginView.css'
 
 /**
@@ -23,7 +24,7 @@ export default function LoginView({ toggleView, onLoginSuccess }) {
 
   const handleLogin = async (e) => {
     e.preventDefault()
-    setErrorMessage()
+    setErrorMessage('')
 
   try {
     const response = await fetch('/api/login', {
@@ -47,11 +48,11 @@ export default function LoginView({ toggleView, onLoginSuccess }) {
   // The form for the login
   return (
   <div className="loginForm">
-    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+    <Notification message={errorMessage} type="error" />
     <form onSubmit={handleLogin}>
       <h1>QUIZNOTE</h1>
-      <input type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <input id="email" type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="current-email"/>
+      <input id="password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value) } autoComplete="current-password"/>
       <button className="loginBtn" type="submit">Log in</button>
       <p>No account?</p>
       <button className="signUpBtn" onClick={toggleView}>Sign up</button>

@@ -13,7 +13,6 @@ import Dashboard from '../dashboard/dashboard.jsx'
  * @returns {JSX.Element} A view presenting the notes that the user saved, enabling to view, edit and delete them.
  */
 export default function ListView({ notes, user, onOpenNote, onDeleteNote, loading }) {
-
   if (loading) {
     return <p>Loading your notes...</p>
   }

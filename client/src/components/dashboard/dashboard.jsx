@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import NoteView from '../noteView/noteView.jsx'
 import ListView from '../listView/listView.jsx'
+import Notification from '../notification/notification.jsx'
 import './dashboard.css'
 
 /**
@@ -12,6 +13,8 @@ import './dashboard.css'
  * @returns {JSX.Element} The dashboard component layout with a dynamic content area.
  */
 export default function Dashboard({ user, onLogOutSuccess }) {
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
   const [ view, setView ] = useState('note')
   const [ activeNote, setActiveNote ] = useState(null)
   const [notes, setNotes] = useState([])
@@ -80,8 +83,12 @@ export default function Dashboard({ user, onLogOutSuccess }) {
       if (response.ok) {
         setNotes(prevNotes => prevNotes.filter(note => note._id !== noteId))
         console.log('Note deleted!')
+        setSuccessMessage('Note deleted')
+        setTimeout(() => setSuccessMessage(''), 3000)
       } else {
         console.log('Deletion failed')
+        setErrorMessage('Could not delete note')
+        setTimeout(() => setErrorMessage(''), 3000)
       }
     } catch (err) {
       console.error('Could not delete note on server', err)
@@ -123,6 +130,8 @@ export default function Dashboard({ user, onLogOutSuccess }) {
   
         setActiveNote(savedNote)
         console.log('Note saved!')
+        setSuccessMessage('Note saved!')
+        setTimeout(() => setSuccessMessage(''), 3000)
       }
     } catch (err) {
       console.error('Failed to save note', err)
@@ -146,8 +155,12 @@ export default function Dashboard({ user, onLogOutSuccess }) {
 
       if (response.ok) {
         onLogOutSuccess(null)
+        setSuccessMessage('User logged out!')
+        setTimeout(() => setSuccessMessage(''), 3000)
       } else {
         console.log('Logging out failed')
+        setErrorMessage('Logging out failed')
+        setTimeout(() => setErrorMessage(''), 3000)
       }
     } catch (err) {
       console.log('Unable to connect to the server during logout', err)
@@ -156,6 +169,8 @@ export default function Dashboard({ user, onLogOutSuccess }) {
 
   return (
     <div className="dashboard">
+      <Notification message={successMessage} type="success" />
+      <Notification message={errorMessage} type="error" />
       <nav className="navigation">
         <div className="dashboardlist">
           <button className="dashBtn" onClick={handleCreateNew}>New note</button>
