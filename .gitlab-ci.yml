@@ -40,7 +40,7 @@ system-test:
   script:
     - npm install 
     - cd client && npm ci && cd .. 
-    - npx playwright install --with-deps chromium
+    - npx playwright install --with-deps chromium --no-ffmpeg
     - npx playwright test tests/ --project=chromium
   artifacts:
     when: always
