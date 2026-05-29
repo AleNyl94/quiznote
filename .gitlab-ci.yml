@@ -32,12 +32,14 @@ test-job:
 system-test:
   stage: test
   script:
-    - npm install
-    - cd server && npm start &
-    - cd ..
-    - cd client && npm run dev &
-    - sleep 5
-    - npx playwright test
+    - npm install 
+    - cd client && npm ci && cd .. 
+    - npx playwright test tests/
+  artifacts:
+    together: true
+    when: always
+    paths:
+      - playwright-report/
 
 deploy-job:
   stage: deploy
