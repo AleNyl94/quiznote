@@ -3,6 +3,7 @@
  */ 
 import { useState } from 'react'
 import './signUpView.css'
+import Notification from '../notification/notification.jsx'
 
 /**
  * The signup-form.
@@ -13,10 +14,11 @@ import './signUpView.css'
  * @returns {JSX.Element} The form for signing up a user.
  */
 export default function SignUpView({ onSignUpSuccess, toggleView }) {
+  const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [errorMessage, setError] = useState(null)
 
 
 
@@ -29,7 +31,8 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
    */
   const handleSignup = async (e) => {
     e.preventDefault()
-    setError(null)
+    setErrorMessage('')
+    setSuccessMessage('')
 
     try {
     const response = await fetch('/api/signup', {
@@ -41,17 +44,19 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
     const data = await response.json()
 
     if (response.ok) {
-      onSignUpSuccess()
+      onSignUpSuccess('User is registered! You can now log in.')
+      setSuccessMessage('User is registered!')
       return
     }
     
     if (response.status === 409 || response.status === 400) {
-      setError(data.error || 'User already exists, try again')
+      setErrorMessage('User already exists')
     } else {
-      setError('Something went wrong on the server')
+      setErrorMessage('Something went wrong on the server')
     }
   } catch (err) {
-    setError('Could not connect to the server', err)
+    setErrorMessage('Could not connect to server')
+    console.error('Could not connect to the server', err)
     }
   }
 
@@ -62,12 +67,13 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
    */ 
   return (
   <div className="signupForm">
-    {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+    <Notification message={successMessage} type="success" />
+    <Notification message={errorMessage} type="error" />
     <form onSubmit={handleSignup}>
       <h2>Sign up your account</h2>
       <input type="text" placeholder="Your username" value={username} onChange={(e) => setUsername(e.target.value)}/>
       <input type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password"/>
       <button className="submitBtn" type="submit">Register account </button>
       <span onClick={toggleView}>Back to logging in</span>
     </form>

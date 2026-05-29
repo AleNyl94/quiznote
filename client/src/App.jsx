@@ -21,7 +21,7 @@ useEffect(() => {
       const response = await fetch('/api/me', { credentials: 'include'})
       
       if(response.ok) {
-        const userData = response.json()
+        const userData = await response.json()
         setUser(userData)
       } else {
         setUser(null)
