@@ -31,6 +31,12 @@ test-job:
 
 system-test:
   stage: test
+  services:
+    - name: mongo:latest
+      alias: mongo
+  variables:
+    MONGO_URI: mongodb://mongo:27017/quiznote_test
+    NODE_ENV: test
   script:
     - npm install 
     - cd client && npm ci && cd .. 
