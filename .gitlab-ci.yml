@@ -40,11 +40,14 @@ system-test:
   script:
     - npm install 
     - cd client && npm ci && cd .. 
-    - npx playwright test tests/
+    - npx playwright install --with-deps chromium
+    - npx playwright test tests/ --project=chromium
   artifacts:
     when: always
     paths:
       - playwright-report/
+  dependencies:
+    - build-job
 
 deploy-job:
   stage: deploy
