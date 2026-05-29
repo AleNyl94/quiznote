@@ -41,8 +41,6 @@ export default function SignUpView({ onSignUpSuccess, toggleView }) {
       body: JSON.stringify({ username, email, password })
     })
 
-    const data = await response.json()
-
     if (response.ok) {
       onSignUpSuccess('User is registered! You can now log in.')
       setSuccessMessage('User is registered!')
