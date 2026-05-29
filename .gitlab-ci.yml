@@ -36,7 +36,6 @@ system-test:
     - cd client && npm ci && cd .. 
     - npx playwright test tests/
   artifacts:
-    together: true
     when: always
     paths:
       - playwright-report/
