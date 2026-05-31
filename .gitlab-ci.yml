@@ -38,10 +38,14 @@ system-test:
     MONGO_URI: mongodb://mongo:27017/quiznote_test
     NODE_ENV: test
   script:
-    - npm install 
-    - cd client && npm ci && cd .. 
-    - npx playwright install --with-deps chromium
-    - npx playwright test tests/ --project=chromium
+   - npm install 
+   - cd server
+   - npm install
+   - node server.js &
+   - cd ..
+   - sleep 5
+   - npx playwright install --with-deps chromium
+   - npx playwright test tests/ --project=chromium
   artifacts:
     when: always
     paths:
