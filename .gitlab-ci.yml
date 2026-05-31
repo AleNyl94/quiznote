@@ -38,9 +38,9 @@ system-test:
     MONGO_URI: "mongodb://localhost:27017/Quiznote"
     NODE_ENV: test
   script:
-   - npm install 
+   - npm install --legacy-peer-deps
    - cd server
-   - npm install
+   - npm install --legacy-peer-deps
    - node server.js &
    - cd ..
    - sleep 5
