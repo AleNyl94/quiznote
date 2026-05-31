@@ -35,7 +35,7 @@ system-test:
     - name: mongo:latest
       alias: mongo
   variables:
-    MONGO_URI: mongodb://mongo:27017/quiznote_test
+    MONGO_URI: "mongodb://localhost:27017/Quiznote"
     NODE_ENV: test
   script:
    - npm install 
