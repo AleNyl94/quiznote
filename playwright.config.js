@@ -27,7 +27,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'http://localhost:5173',
+    baseURL: 'http://cu1066.camp.lnu.se/',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -73,13 +73,13 @@ export default defineConfig({
    webServer: [
     {
       command: 'cd server && npm start',
-      url: 'http://localhost:3000',
+      url: 'http://cu1066.camp.lnu.se/',
       reuseExistingServer: !process.env.CI,
       timeout: 120 * 1000,
     },
     {
       command: 'cd client && npm run dev',
-      url: 'http://localhost:5173',
+      url: 'http://cu1066.camp.lnu.se/',
       reuseExistingServer: !process.env.CI,
       timeout: 120 * 1000,
     }
