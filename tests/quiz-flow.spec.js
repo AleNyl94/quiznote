@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('System-test for quiz-generation flow', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:5173/')
+    await page.goto('/')
     await page.fill('input[type="email"]', 'test@mail.com')
     await page.fill('input[type="password"]', 'testtest')
     await page.click('.loginBtn')

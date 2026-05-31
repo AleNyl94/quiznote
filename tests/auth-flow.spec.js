@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 
 test.describe('Systemtest for signing up and logging in', () => {
   test('User should se the loginform at the start', async ({page}) => {
-    await page.goto('http://localhost:5173')
+    await page.goto('/')
 
     await expect(page.locator('h1')).toHaveText('QUIZNOTE')
 
