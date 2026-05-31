@@ -16,7 +16,7 @@ import './loginView.css'
  * @param {string} props.signupMessage The success message passed from a successful registration.
  * @returns {JSX.Element} View for logging in with email and password, if no account there is a option to sign up.
  */
-export default function LoginView({ toggleView, onLoginSuccess, signupMessage }) {
+export default function LoginView({ toggleView, onLoginSuccess }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
@@ -49,7 +49,6 @@ export default function LoginView({ toggleView, onLoginSuccess, signupMessage })
   // The form for the login
   return (
   <div className="loginForm">
-    <Notification message={signupMessage} type="success" />
     <Notification message={errorMessage} type="error" />
     <form onSubmit={handleLogin}>
       <h1>QUIZNOTE</h1>
