@@ -37,11 +37,16 @@ system-test:
   variables:
     MONGO_URI: "mongodb://localhost:27017/Quiznote"
     NODE_ENV: test
+    PORT: 3000
   script:
    - npm install --legacy-peer-deps
+   - cd client
+   - npm install --legacy-peer-deps
+   - npm run build
+   - cd ..
    - cd server
    - npm install --legacy-peer-deps
-   - node server.js &
+   - MONGO_URI=$MONGO_URI NODE_ENV=$NODE_ENV PORT=$PORT node server.js &
    - cd ..
    - sleep 5
    - npx playwright install --with-deps chromium
