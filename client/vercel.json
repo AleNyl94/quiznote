@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://quiznote-backend.onrender.com/api/:path*"
+      "destination": "https://quiznote.onrender.com/api/:path*"
     }
   ]
 }
