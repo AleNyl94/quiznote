@@ -39,18 +39,10 @@ system-test:
     NODE_ENV: test
     PORT: 3000
   script:
-   - npm install --legacy-peer-deps
-   - cd client
-   - npm install --legacy-peer-deps
-   - npm run build
-   - cd ..
-   - cd server
-   - npm install --legacy-peer-deps
-   - MONGO_URI=$MONGO_URI NODE_ENV=$NODE_ENV PORT=$PORT node server.js &
-   - cd ..
-   - sleep 5
-   - npx playwright install --with-deps chromium
-   - npx playwright test tests/ --project=chromium
+    - npm install --legacy-peer-deps
+    - cd client && npm install --legacy-peer-deps && cd ..
+    - cd server && npm install --legacy-peer-deps && cd ..
+    - npx playwright test tests/ --project=chromium
   artifacts:
     when: always
     paths:

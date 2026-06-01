@@ -29,7 +29,7 @@ test.describe('Systemtest for signing up and logging in', () => {
 })
 
 test.afterAll(async () => {
-  const mongoURI = 'mongodb://localhost:27017/Quiznote'
+  const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/Quiznote'
   await mongoose.connect(mongoURI)
   
   await mongoose.connection.collection('users').deleteOne({ email: 'test1@mail.com' })
