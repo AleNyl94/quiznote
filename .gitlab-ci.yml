@@ -42,6 +42,7 @@ system-test:
     - npm install --legacy-peer-deps
     - cd client && npm install --legacy-peer-deps && cd ..
     - cd server && npm install --legacy-peer-deps && cd ..
+    - npx playwright install --with-deps chromium
     - npx playwright test tests/ --project=chromium
   artifacts:
     when: always
