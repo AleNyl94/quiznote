@@ -12,7 +12,7 @@ import cors from 'cors'
 const app = express()
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://cu1066.camp.lnu.se'],
+  origin: ['http://localhost:5173', 'https://quiznote.vercel.app'],
   credentials: true
 }))
 
