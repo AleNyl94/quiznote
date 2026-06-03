@@ -28,7 +28,10 @@ describe('SignUpView Component', () => {
       json: () => Promise.resolve({ message: 'User created' })
     })
 
-    render(<SignUpView />)
+    render(<SignUpView 
+      onSignUpSuccess={vi.fn()}
+      toggleView={vi.fn()}
+    />)
 
     const usernameInput = screen.getByPlaceholderText(/your username/i)
     const emailInput = screen.getByPlaceholderText(/your email/i)
@@ -42,7 +45,7 @@ describe('SignUpView Component', () => {
     fireEvent.click(signupBtn)
 
     await waitFor(() => {
-      expect(globalThis.fetch).toHaveBeenCalledWith('/api/signup', expect.objectContaining({
+      expect(globalThis.fetch).toHaveBeenCalledWith('http://localhost:3000/api/signup', expect.objectContaining({
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',

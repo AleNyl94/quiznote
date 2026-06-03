@@ -45,6 +45,8 @@ export default function Dashboard({ user, onLogOutSuccess }) {
       }
     }, [view])
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
   /**
    * Toggles the list or note-view.
    * 
@@ -75,7 +77,7 @@ export default function Dashboard({ user, onLogOutSuccess }) {
     }
 
     try {
-      const response = await fetch(`/api/note/${noteId}`, {
+      const response = await fetch(`${API_URL}/api/note/${noteId}`, {
         method: 'DELETE',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include'
@@ -105,7 +107,7 @@ export default function Dashboard({ user, onLogOutSuccess }) {
       const id = activeNote?._id
       const isEdit = !!id
 
-      const url = isEdit ? `/api/note/${id}` : '/api/note'
+      const url = isEdit ? `${API_URL}/api/note/${id}` : `${API_URL}/api/note`
       const method = isEdit ? 'PUT' : 'POST'
       
       console.log(`Skickar ${method}-anrop till: ${url} (ID var: ${id})`)
@@ -147,7 +149,7 @@ export default function Dashboard({ user, onLogOutSuccess }) {
     }
 
     try {
-      const response = await fetch('/api/logout', {
+      const response = await fetch(`${API_URL}/api/logout`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'

@@ -19,6 +19,8 @@ export default function NoteView({ activeNote, saveNote }) {
   const [quizTasks, setQuizTasks] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
 
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
   /**
    * Sends the quiz-request
    */
@@ -38,7 +40,7 @@ export default function NoteView({ activeNote, saveNote }) {
         return
       }
 
-      const response = await fetch(`/api/note/quiz/${noteId}`, {
+      const response = await fetch(`${API_URL}/api/note/quiz/${noteId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: noteBody }),

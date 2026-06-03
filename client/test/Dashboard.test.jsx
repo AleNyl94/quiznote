@@ -34,7 +34,7 @@ describe('Dashboard Component', () => {
     const logoutBtn = screen.getByRole('button', { name: /log out/i })
     fireEvent.click(logoutBtn)
 
-    expect(globalThis.fetch).toHaveBeenCalledWith('/api/logout', expect.anything())
+    expect(globalThis.fetch).toHaveBeenCalledWith('http://localhost:3000/api/logout', expect.anything())
     
     await vi.waitFor(() => {
       expect(mockOnLogOutSuccess).toHaveBeenCalledWith(null)
