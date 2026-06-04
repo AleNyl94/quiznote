@@ -19,7 +19,7 @@ export default function NoteView({ activeNote, saveNote }) {
   const [quizTasks, setQuizTasks] = useState([])
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+  const API_URL = import.meta.env.VITE_ENV_URL || 'http://localhost:3000'
 
   /**
    * Sends the quiz-request

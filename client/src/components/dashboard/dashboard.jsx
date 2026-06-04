@@ -45,7 +45,7 @@ export default function Dashboard({ user, onLogOutSuccess }) {
       }
     }, [view])
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+  const API_URL = import.meta.env.VITE_ENV_URL || 'http://localhost:3000'
 
   /**
    * Toggles the list or note-view.

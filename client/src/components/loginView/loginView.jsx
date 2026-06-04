@@ -21,7 +21,7 @@ export default function LoginView({ toggleView, onLoginSuccess }) {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+  const API_URL = import.meta.env.VITE_ENV_URL || 'http://localhost:3000'
 
   const handleLogin = async (e) => {
     e.preventDefault()
