@@ -15,11 +15,10 @@ const toggleView = () => {
   setCurrentView(prev => prev === 'login' ? 'signup' : 'login')
 }
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
-
 useEffect(() => {
   const checkSession = async () => {
     try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
       const response = await fetch(`${API_URL}/me`, { credentials: 'include'})
       
       if(response.ok) {
@@ -39,9 +38,10 @@ useEffect(() => {
 }, [])
 
 const handleLoginSuccess = (userData) => {
-  setUser(userData)
+  setUser(userData.user)
   setCurrentView('dashboard')
 }
+
 return (
   <div className="App">
     {currentView === 'login' && (

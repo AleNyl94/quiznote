@@ -12,7 +12,7 @@ import cors from 'cors'
 const app = express()
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://quiznote.vercel.app'],
+  origin: [ process.NODE_ENV = 'production', 'http://localhost:5173', 'https://quiznote-ashen.vercel.app/'],
   credentials: true
 }))
 
