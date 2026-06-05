@@ -20,13 +20,16 @@ export default function Dashboard({ user, onLogOutSuccess }) {
   const [notes, setNotes] = useState([])
   const [ loading, setLoading ] = useState(false)
 
+  const API_URL = import.meta.env.VITE_ENV_URL || 'http://localhost:3000'
   /**
    * Gets the users notes for the list.
    */
   useEffect(() => {
+      const API_URL = import.meta.env.VITE_ENV_URL || 'http://localhost:3000'
+
       const fetchNotes = async () => {
         try { 
-        const response = await fetch('/api/note/list', {
+        const response = await fetch(`${API_URL}/api/note/list`, {
           credentials: 'include'
         })
         if (response.ok) {
@@ -45,7 +48,6 @@ export default function Dashboard({ user, onLogOutSuccess }) {
       }
     }, [view])
 
-  const API_URL = import.meta.env.VITE_ENV_URL || 'http://localhost:3000'
 
   /**
    * Toggles the list or note-view.
