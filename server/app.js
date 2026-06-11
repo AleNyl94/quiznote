@@ -6,6 +6,7 @@
 
 import express from 'express'
 import session from 'express-session'
+import MongoStore from 'connect-mongo'
 import mainRouter from './routes/router.js'
 import cors from 'cors'
 
@@ -23,6 +24,10 @@ app.use(session({
     secret: process.env.SECRET_ENV || 'test-secret-fallback',
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    collectionName: 'sessions'
+  }),
     cookie:{
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24,
