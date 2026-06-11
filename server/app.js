@@ -13,14 +13,17 @@ import mainRouter from './routes/router.js'
 import cors from 'cors'
 
 const app = express()
+app.set('trust proxy', 1)
 
 app.use(cors({
-  origin: [ process.NODE_ENV = 'production', 'http://localhost:5173', 'https://quiznote-ashen.vercel.app'],
+  origin:  process.NODE_ENV === 'production'
+  ? 'http://localhost:5173'
+  : 'https://quiznote-ashen.vercel.app',
   credentials: true
 }))
 
-
 app.use(express.json())
+
 app.use(session({
     name: 'sessionID',
     secret: process.env.SECRET_ENV || 'test-secret-fallback',
